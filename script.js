@@ -61,6 +61,43 @@ const musicData = [
     artist: "Muammer & Suno",
     musicPath: "Ask Me.mp3",
   },
+{
+    backgroundImage: "tunes bg.png",
+    posterUrl: "tunes bg.png",
+    title: "?",
+    album: "No Spirit",
+    year: 2024,
+    artist: "Muammer & Suno",
+    musicPath: "",
+  },
+  {
+    backgroundImage: "tunes bg.png",
+    posterUrl: "tunes bg.png",
+    title: "?",
+    album: "No Spirit",
+    year: 2024,
+    artist: "Muammer & Suno",
+    musicPath: "",
+  },
+  {
+    backgroundImage: "tunes bg.png",
+    posterUrl: "tunes bg.png",
+    title: "?",
+    album: "No Spirit",
+    year: 2024,
+    artist: "Muammer & Suno",
+    musicPath: "",
+  },
+  {
+    backgroundImage: "tunes bg.png",
+    posterUrl: "tunes bg.png",
+    title: "?",
+    album: "No Spirit",
+    year: 2024,
+    artist: "Muammer & Suno",
+    musicPath: "",
+  },
+  
 ];
 
 
