@@ -64,7 +64,7 @@ const musicData = [
 {
     backgroundImage: "My-Years-Without-You.webp",
     posterUrl: "My-Years-Without-You.webp",
-    title: "2024",
+    title: "My Years Without You",
     album: "Unknown",
     year: 2024,
     artist: "Muammer & Suno",
