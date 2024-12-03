@@ -68,7 +68,7 @@ const musicData = [
     album: "Unknown",
     year: 2024,
     artist: "Muammer & Suno",
-    musicPath: "My-Years-Without-You.mp3",
+    musicPath: "My Years Without You.mp3",
   },
   {
     backgroundImage: "tunes bg.png",
