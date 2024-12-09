@@ -53,13 +53,13 @@ const musicData = [
     musicPath: "Whispers of Autumn.mp3",
   },
   {
-    backgroundImage: "Ask Me.webp",
-    posterUrl: "Ask Me.webp",
-    title: "Ask Me",
+    backgroundImage: "tunes bg.png",
+    posterUrl: "tunes bg.png",
+    title: "?",
     album: "Unknown",
     year: 2024,
     artist: "Muammer & Suno",
-    musicPath: "Ask Me.mp3",
+    musicPath: "",
   },
 {
     backgroundImage: "My-Years-Without-You.webp",
