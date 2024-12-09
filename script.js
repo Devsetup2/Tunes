@@ -71,13 +71,13 @@ const musicData = [
     musicPath: "My Years Without You.mp3",
   },
   {
-    backgroundImage: "tunes bg.png",
-    posterUrl: "tunes bg.png",
+    backgroundImage: "fire.webp",
+    posterUrl: "fire.webp",
     title: "?",
     album: "Unknown",
     year: 2024,
     artist: "Muammer & Suno",
-    musicPath: "",
+    musicPath: "Fire.mp3",
   },
   {
     backgroundImage: "tunes bg.png",
