@@ -73,7 +73,7 @@ const musicData = [
   {
     backgroundImage: "fire.webp",
     posterUrl: "fire.webp",
-    title: "?",
+    title: "Fire",
     album: "Unknown",
     year: 2024,
     artist: "Muammer & Suno",
