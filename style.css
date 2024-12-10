@@ -677,3 +677,58 @@ body:hover::-webkit-scrollbar-thumb { background-color: var(--surface-variant); 
   .music-list { gap: 28px; }
 
 }
+
+
+/**
+   * Footer
+   */
+
+   .footer {
+    background-color: #1a1a1a;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons .icon {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.social-icons .icon:hover {
+    background-color: #333;
+}
+
+.twitter:hover { background-color: #1DA1F2; }
+.instagram:hover { background-color: #E4405F; }
+.facebook:hover { background-color: #3b5998; }
+.behance:hover { background-color: #1769ff; }
+
+.logo h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    text-transform: uppercase;
+    text-align: center;
+    flex-grow: 1;
+}
