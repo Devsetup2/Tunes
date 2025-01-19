@@ -80,6 +80,42 @@ const musicData = [
     musicPath: "Fire.mp3",
   },
   {
+    backgroundImage: "What Kind Of Life.webp",
+    posterUrl: "What Kind Of Life.webp",
+    title: "What Kind Of Life",
+    album: "Unknown",
+    year: 2025,
+    artist: "Muammer & Suno",
+    musicPath: "What Kind Of Life.mp3",
+  },
+  {
+    backgroundImage: "tunes bg.png",
+    posterUrl: "tunes bg.png",
+    title: "?",
+    album: "Unknown",
+    year: 2024,
+    artist: "Muammer & Suno",
+    musicPath: "",
+  },
+  {
+    backgroundImage: "tunes bg.png",
+    posterUrl: "tunes bg.png",
+    title: "?",
+    album: "Unknown",
+    year: 2024,
+    artist: "Muammer & Suno",
+    musicPath: "",
+  },
+  {
+    backgroundImage: "tunes bg.png",
+    posterUrl: "tunes bg.png",
+    title: "?",
+    album: "Unknown",
+    year: 2024,
+    artist: "Muammer & Suno",
+    musicPath: "",
+  },
+  {
     backgroundImage: "tunes bg.png",
     posterUrl: "tunes bg.png",
     title: "?",
@@ -99,6 +135,8 @@ const musicData = [
   },
   
 ];
+
+
 
 
 
