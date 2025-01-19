@@ -80,13 +80,13 @@ const musicData = [
     musicPath: "Fire.mp3",
   },
   {
-    backgroundImage: "What Kind Of Life.webp",
-    posterUrl: "What Kind Of Life.webp",
+    backgroundImage: "WhatKindLife.webp",
+    posterUrl: "WhatKindLife.webp",
     title: "What Kind Of Life",
     album: "Unknown",
     year: 2025,
     artist: "Muammer & Suno",
-    musicPath: "What Kind Of Life.mp3",
+    musicPath: "WhatKindLife.mp3",
   },
   {
     backgroundImage: "tunes bg.png",
