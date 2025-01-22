@@ -9,75 +9,75 @@ const artistName = document.querySelector(".music-player p");
 
 const songs = [
   {
-    title: "",
-    name: "",
+    title: "Fire",
+    name: "Muammer & Suno",
     source:
-      "",
+      "Fire.mp3",
   },
   {
-    title: "",
-    name: "",
+    title: "Burnt",
+    name: "Muammer & Suno",
     source:
-      "",
+      "burnt.mp3",
   },
   {
-    title: "",
-    name: "",
+    title: "What Kind Of Life",
+    name: "Muammer & Suno",
     source:
-      "",
+      "whatkindlife.mp3",
   },
   {
-    title: "",
-    name: "",
+    title: "My Years Without You",
+    name: "Muammer & Suno",
     source:
-      "",
+      "myyearswithoutyou.mp3",
   },
   {
-    title: "",
-    name: "",
+    title: "Summer Time",
+    name: "Muammer & Suno",
     source:
-      "",
+      "summertime.mp3",
   },
 
   {
+    title: "Whispers Of Autumn",
+    name: "Muammer & Suno",
+    source:
+      "whispersofautumn.mp3",
+  },
+  {
+    title: "Dance Alone ",
+    name: "Muammer & Suno",
+    source:
+      "dancealone.mp3 ",
+  },
+  {
+    title: "Deceived",
+    name: "Muammer & Suno",
+    source:
+      "deceived.mp3",
+  },
+  {
+    title: "Lazy Tired",
+    name: "Muammer & Suno",
+    source:
+      "lazytired.mp3",
+  },
+  {
     title: "",
-    name: "",
+    name: "Muammer & Suno",
     source:
       "",
   },
   {
     title: "",
-    name: "",
+    name: "Muammer & Suno",
     source:
       "",
   },
   {
     title: "",
-    name: "",
-    source:
-      "",
-  },
-  {
-    title: "",
-    name: "",
-    source:
-      "",
-  },
-  {
-    title: "",
-    name: "",
-    source:
-      "",
-  },
-  {
-    title: "",
-    name: "",
-    source:
-      "",
-  },
-  {
-    title: "",
-    name: "",
+    name: "Muammer & Suno",
     source:
       "",
   },
