@@ -1,171 +1,528 @@
-const progress = document.getElementById("progress");
-const song = document.getElementById("song");
-const controlIcon = document.getElementById("controlIcon");
-const playPauseButton = document.querySelector(".play-pause-btn");
-const forwardButton = document.querySelector(".controls button.forward");
-const backwardButton = document.querySelector(".controls button.backward");
-const songName = document.querySelector(".music-player h1");
-const artistName = document.querySelector(".music-player p");
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM Elements
+    const musicContainer = document.querySelector('.music-container');
+    const musicCard = document.querySelector('.music-card');
+    const musicImage = document.querySelector('.music-image');
+    const songTitle = document.querySelector('.song-title');
+    const artist = document.querySelector('.artist');
+    const year = document.querySelector('.year');
+    const playPauseBtn = document.querySelector('.play-pause');
+    const likeBtn = document.querySelector('.like');
+    const dislikeBtn = document.querySelector('.dislike');
+    const audioPlayer = document.getElementById('audio-player');
+    const themeToggle = document.querySelector('.theme-toggle');
+    const favoritesBtn = document.querySelector('.favorites-btn');
+    const favoritesCount = document.querySelector('.favorites-count');
+    const favoritesSidebar = document.querySelector('.favorites-sidebar');
+    const closeSidebar = document.querySelector('.close-sidebar');
+    const favoritesList = document.querySelector('.favorites-list');
+    const overlay = document.querySelector('.overlay');
+    const body = document.body;
+    const progressBar = document.querySelector('.progress-bar');
+    const progress = document.querySelector('.progress');
+    const currentTimeEl = document.querySelector('.current-time');
+    const durationEl = document.querySelector('.duration');
 
-const songs = [
-  {
-    title: "Fire",
-    name: "Muammer & Suno",
-    source:
-      "Fire.mp3",
-  },
-  {
-    title: "Burnt",
-    name: "Muammer & Suno",
-    source:
-      "burnt.mp3",
-  },
-  {
-    title: "What Kind Of Life",
-    name: "Muammer & Suno",
-    source:
-      "whatkindlife.mp3",
-  },
-  {
-    title: "My Years Without You",
-    name: "Muammer & Suno",
-    source:
-      "myyearswithoutyou.mp3",
-  },
-  {
-    title: "Summer Time",
-    name: "Muammer & Suno",
-    source:
-      "summertime.mp3",
-  },
+    // Music data
+    const musicData = [
+        {
+            id: 1,
+            title: "Blinding Lights",
+            artist: "The Weeknd",
+            year: "2020",
+            image: "https://i.scdn.co/image/ab67616d0000b2734718e2b124f79258be7bc452",
+            audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        },
+        {
+            id: 2,
+            title: "Save Your Tears",
+            artist: "The Weeknd",
+            year: "2020",
+            image: "https://i.scdn.co/image/ab67616d0000b2738863bc11d2aa12b54f5aeb36",
+            audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+        },
+        {
+            id: 3,
+            title: "Stay",
+            artist: "The Kid LAROI, Justin Bieber",
+            year: "2021",
+            image: "https://i.scdn.co/image/ab67616d0000b273c5653f9038e42efad2f8a266",
+            audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+        },
+        {
+            id: 4,
+            title: "good 4 u",
+            artist: "Olivia Rodrigo",
+            year: "2021",
+            image: "https://i.scdn.co/image/ab67616d0000b2731d7e26119d1a6648e34dc51c",
+            audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+        },
+        {
+            id: 5,
+            title: "Levitating",
+            artist: "Dua Lipa",
+            year: "2020",
+            image: "https://i.scdn.co/image/ab67616d0000b273f6de355783e42c7c357cfc78",
+            audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
+        },
+        {
+            id: 6,
+            title: "What Kind Of Life",
+            artist: "Muammer Altunkan",
+            year: "2024",
+            image: "https://devsetup2.github.io/Tunes/WhatKindLife.webp",
+            audio: "https://devsetup2.github.io/Tunes/whatkindlife.mp3"
+        },
+        {
+            id: 7,
+            title: "My Years Without You",
+            artist: "Muammer Altunkan",
+            year: "2024",
+            image: "https://devsetup2.github.io/Tunes/myyearswithoutyou.webp",
+            audio: "https://devsetup2.github.io/Tunes/myyearswithoutyou.mp3"
+        },
+        {
+            id: 8,
+            title: "summertime.mp3",
+            artist: "Muammer Altunkan",
+            year: "2024",
+            image: "https://devsetup2.github.io/Tunes/summertime.webp",
+            audio: "https://devsetup2.github.io/Tunes/summertime.mp3"
+        },
+        {
+            id: 9,
+            title: "Whispers Of Autumn",
+            artist: "Muammer Altunkan",
+            year: "2024",
+            image: "https://devsetup2.github.io/Tunes/Whispers%20of%20Autumn.webp",
+            audio: "https://devsetup2.github.io/Tunes/whispersofautumn.mp3"
+        },
+        {
+            id: 10,
+            title: "Lazy Tired",
+            artist: "Muammer Altunkan",
+            year: "2024",
+            image: "https://devsetup2.github.io/Tunes/Lazy%20Tired.webp",
+            audio: "https://devsetup2.github.io/Tunes/lazytired.mp3"
+        },
+        {
+            id: 11,
+            title: "Deceived",
+            artist: "Muammer Altunkan",
+            year: "2024",
+            image: "https://devsetup2.github.io/Tunes/Deceived.webp",
+            audio: "https://devsetup2.github.io/Tunes/deceived.mp3"
+        },
+        {
+            id: 12,
+            title: "Whispers Of Autumn",
+            artist: "Muammer Altunkan",
+            year: "2024",
+            image: "https://devsetup2.github.io/Tunes/Dance%20Alone.webp",
+            audio: "https://devsetup2.github.io/Tunes/dancealone.mp3"
+        },
+        
+    ];
 
-  {
-    title: "Whispers Of Autumn",
-    name: "Muammer & Suno",
-    source:
-      "whispersofautumn.mp3",
-  },
-  {
-    title: "Dance Alone ",
-    name: "Muammer & Suno",
-    source:
-      "dancealone.mp3 ",
-  },
-  {
-    title: "Deceived",
-    name: "Muammer & Suno",
-    source:
-      "deceived.mp3",
-  },
-  {
-    title: "Lazy Tired",
-    name: "Muammer & Suno",
-    source:
-      "lazytired.mp3",
-  },
-  {
-    title: "",
-    name: "Muammer & Suno",
-    source:
-      "",
-  },
-  {
-    title: "",
-    name: "Muammer & Suno",
-    source:
-      "",
-  },
-  {
-    title: "",
-    name: "Muammer & Suno",
-    source:
-      "",
-  },
+    let currentSongIndex = 0;
+    let isPlaying = false;
+    let favorites = JSON.parse(localStorage.getItem('tunezz_favorites')) || [];
+
+    // Initialize the app
+    function init() {
+        loadSong(currentSongIndex);
+        setupSwipe();
+        setupEventListeners();
+        updateFavoritesCount();
+        renderFavoritesList();
+    }
+
+    // Load song
+    function loadSong(index) {
+        // Index'in geçerli bir aralıkta olduğundan emin ol
+        if (index < 0 || index >= musicData.length) {
+            console.error("Invalid song index:", index);
+            currentSongIndex = 0; // Hatalı durumda ilk şarkıya dön
+            index = 0;
+        }
+        const song = musicData[index];
+
+        // Şarkı verilerinin eksik olup olmadığını kontrol et
+        if (!song || !song.image || !song.title || !song.artist || !song.year || !song.audio) {
+            console.error("Song data is incomplete for index:", index, song);
+            // Eksik veri durumunda bir sonraki şarkıya geçmeyi deneyebilir veya varsayılan bir durum ayarlayabilirsiniz.
+            // Şimdilik sadece konsola hata basıyoruz ve bir sonraki şarkıya geçiyoruz.
+            if (musicData.length > 1) { // Birden fazla şarkı varsa
+                nextSong(); // Bir sonraki şarkıyı yükle
+            } else {
+                // Tek şarkı varsa ve o da hatalıysa, arayüzü temizle veya bir hata mesajı göster
+                musicImage.style.backgroundImage = `url('')`;
+                songTitle.textContent = "Şarkı Yüklenemedi";
+                artist.textContent = "";
+                year.textContent = "";
+                audioPlayer.src = "";
+                durationEl.textContent = '0:00';
+            }
+            return;
+        }
 
 
-];
+        musicImage.style.backgroundImage = `url(${song.image})`;
+        songTitle.textContent = song.title;
+        artist.textContent = song.artist;
+        year.textContent = song.year;
+        audioPlayer.src = song.audio;
 
-let currentSongIndex = 3;
+        // Update like button state
+        const isFavorite = favorites.some(fav => fav.id === song.id);
+        likeBtn.classList.toggle('active', isFavorite);
 
-function updateSongInfo() {
-  songName.textContent = songs[currentSongIndex].title;
-  artistName.textContent = songs[currentSongIndex].name;
-  song.src = songs[currentSongIndex].source;
+        // Preload next image for smoother transitions
+        if (index < musicData.length - 1) {
+            const nextSongData = musicData[index + 1];
+            if (nextSongData && nextSongData.image) { // Bir sonraki şarkı ve resmi varsa
+                 const img = new Image();
+                 img.src = nextSongData.image;
+            }
+        }
 
-  song.addEventListener("loadeddata", function () {});
-}
+        // Reset progress bar
+        progressBar.style.width = '0%';
+        progress.value = 0;
+        currentTimeEl.textContent = '0:00';
 
-song.addEventListener("timeupdate", function () {
-  if (!song.paused) {
-    progress.value = song.currentTime;
-  }
-});
+        // Set duration after metadata loads
+        audioPlayer.onloadedmetadata = function() { // 'addEventListener' yerine doğrudan atama
+            durationEl.textContent = formatTime(audioPlayer.duration);
+        };
+    }
 
-song.addEventListener("loadedmetadata", function () {
-  progress.max = song.duration;
-  progress.value = song.currentTime;
-});
+    // Format time (seconds to MM:SS)
+    function formatTime(seconds) {
+        if (isNaN(seconds) || seconds < 0) return '0:00'; // Geçersiz süre için
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+    }
 
-function pauseSong() {
-  song.pause();
-  controlIcon.classList.remove("fa-pause");
-  controlIcon.classList.add("fa-play");
-}
+    // Update progress bar
+    function updateProgress(e) {
+        const { duration, currentTime } = e.srcElement;
+        if (duration > 0) { // Süre 0'dan büyükse ilerlemeyi güncelle
+            const progressPercent = (currentTime / duration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+            progress.value = progressPercent;
+        }
+        currentTimeEl.textContent = formatTime(currentTime);
+    }
 
-function playSong() {
-  song.play();
-  controlIcon.classList.add("fa-pause");
-  controlIcon.classList.remove("fa-play");
-}
+    // Set progress when clicked on progress bar
+    function setProgress(e) {
+        const width = this.clientWidth;
+        const clickX = e.offsetX;
+        const duration = audioPlayer.duration;
+        if (duration > 0) { // Süre 0'dan büyükse
+            audioPlayer.currentTime = (clickX / width) * duration;
+        }
+    }
 
-function playPause() {
-  if (song.paused) {
-    playSong();
-  } else {
-    pauseSong();
-  }
-}
+    // Play/pause toggle
+    function togglePlay() {
+        if (!audioPlayer.src || audioPlayer.src === window.location.href) { // Eğer ses kaynağı yoksa veya varsayılan URL ise (yani şarkı yüklenmemişse)
+             console.warn("No audio source loaded to play.");
+             return;
+        }
+        if (isPlaying) {
+            pauseSong();
+        } else {
+            playSong();
+        }
+    }
 
-playPauseButton.addEventListener("click", playPause);
+    function playSong() {
+        if (!audioPlayer.src || audioPlayer.src === window.location.href) return;
+        audioPlayer.play().then(() => {
+            isPlaying = true;
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            musicCard.classList.add('playing');
+        }).catch(error => {
+            console.error("Error playing audio:", error);
+            // Kullanıcı etkileşimi olmadan otomatik oynatma engellenmiş olabilir.
+            // Bu durumda kullanıcıya bir bildirim gösterebilirsiniz.
+            isPlaying = false; // Oynatma başarısız olursa durumu güncelle
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            musicCard.classList.remove('playing');
+        });
+    }
 
-progress.addEventListener("input", function () {
-  song.currentTime = progress.value;
-});
+    function pauseSong() {
+        audioPlayer.pause();
+        isPlaying = false;
+        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        musicCard.classList.remove('playing');
+    }
 
-progress.addEventListener("change", function () {
-  playSong();
-});
+    // Next song
+    function nextSong() {
+        currentSongIndex = (currentSongIndex + 1) % musicData.length;
+        loadSong(currentSongIndex);
+        if (isPlaying) playSong();
+    }
 
-forwardButton.addEventListener("click", function () {
-  currentSongIndex = (currentSongIndex + 1) % songs.length;
-  updateSongInfo();
-  playPause();
-});
+    // Previous song
+    function prevSong() {
+        currentSongIndex = (currentSongIndex - 1 + musicData.length) % musicData.length;
+        loadSong(currentSongIndex);
+        if (isPlaying) playSong();
+    }
 
-backwardButton.addEventListener("click", function () {
-  currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-  updateSongInfo();
-  playPause();
-});
+    // Like functionality
+    function likeSong() {
+        if (currentSongIndex < 0 || currentSongIndex >= musicData.length) return; // Geçersiz index kontrolü
+        const currentSong = musicData[currentSongIndex];
+        if (!currentSong || typeof currentSong.id === 'undefined') return; // Şarkı veya ID yoksa işlem yapma
 
-updateSongInfo();
+        const songIndexInFavorites = favorites.findIndex(fav => fav.id === currentSong.id);
 
-var swiper = new Swiper(".swiper", {
-  effect: "coverflow",
-  centeredSlides: true,
-  initialSlide: 3,
-  slidesPerView: "auto",
-  allowTouchMove: false,
-  spaceBetween: 40,
-  coverflowEffect: {
-    rotate: 25,
-    stretch: 0,
-    depth: 50,
-    modifier: 1,
-    slideShadows: false,
-  },
-  navigation: {
-    nextEl: ".forward",
-    prevEl: ".backward",
-  },
+        if (songIndexInFavorites === -1) {
+            // Add to favorites
+            favorites.push({...currentSong}); // Şarkının bir kopyasını ekle
+            likeBtn.classList.add('active');
+        } else {
+            // Remove from favorites
+            favorites.splice(songIndexInFavorites, 1);
+            likeBtn.classList.remove('active');
+        }
+
+        // Save to localStorage
+        localStorage.setItem('tunezz_favorites', JSON.stringify(favorites));
+        updateFavoritesCount();
+        renderFavoritesList();
+
+        // Swipe animation
+        musicCard.classList.add('swipe-right');
+        setTimeout(() => {
+            musicCard.classList.remove('swipe-right');
+            nextSong();
+        }, 500);
+    }
+
+    // Dislike functionality
+    function dislikeSong() {
+        musicCard.classList.add('swipe-left');
+        setTimeout(() => {
+            musicCard.classList.remove('swipe-left');
+            nextSong();
+        }, 500);
+    }
+
+    // Update favorites count
+    function updateFavoritesCount() {
+        favoritesCount.textContent = favorites.length;
+    }
+
+    // Render favorites list
+    function renderFavoritesList() {
+        favoritesList.innerHTML = ''; // Önceki listeyi temizle
+
+        if (favorites.length === 0) {
+            favoritesList.innerHTML = '<p class="no-favorites">Favori şarkı bulunmamaktadır</p>';
+            return;
+        }
+
+        favorites.forEach(song => {
+            if (!song || typeof song.id === 'undefined') return; // Geçersiz şarkı verisini atla
+
+            const favoriteItem = document.createElement('div');
+            favoriteItem.className = 'favorite-item';
+            favoriteItem.dataset.id = song.id; // Oynatma için ID
+            favoriteItem.innerHTML = `
+                <img src="${song.image}" alt="${song.title}">
+                <div class="favorite-item-info">
+                    <h4 class="favorite-item-title">${song.title}</h4>
+                    <p class="favorite-item-artist">${song.artist}</p>
+                </div>
+                <button class="remove-favorite" data-id="${song.id}">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            favoritesList.appendChild(favoriteItem);
+
+            // Play song from favorites when item (not remove button) is clicked
+            favoriteItem.addEventListener('click', function(e) {
+                // Sadece favori öğesinin kendisine tıklandığında (kaldırma butonuna değil) çalışır
+                if (e.target.closest('.remove-favorite')) {
+                    return;
+                }
+                const id = parseInt(this.dataset.id);
+                playFavoriteSong(id);
+            });
+
+            // Add event listener to remove button within the item
+            const removeBtn = favoriteItem.querySelector('.remove-favorite');
+            if (removeBtn) {
+                 removeBtn.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Olayın favori öğesine yayılmasını engelle
+                    const id = parseInt(this.dataset.id);
+                    removeFromFavorites(id);
+                });
+            }
+        });
+    }
+
+
+    // Play song from favorites
+    function playFavoriteSong(id) {
+        const songIndex = musicData.findIndex(song => song.id === id);
+        if (songIndex !== -1) {
+            currentSongIndex = songIndex;
+            loadSong(currentSongIndex);
+            playSong();
+            if (body.classList.contains('sidebar-open')) { // Kenar çubuğu açıksa kapat
+                 toggleSidebar();
+            }
+        } else {
+            console.warn("Favorite song not found in musicData with ID:", id);
+        }
+    }
+
+    // Remove from favorites
+    function removeFromFavorites(id) {
+        favorites = favorites.filter(fav => fav.id !== id);
+        localStorage.setItem('tunezz_favorites', JSON.stringify(favorites));
+        updateFavoritesCount();
+        renderFavoritesList(); // Listeyi yeniden oluşturarak event listener'ları da günceller
+
+        // Update like button if current song is the one being removed
+        if (currentSongIndex >= 0 && currentSongIndex < musicData.length) {
+            const currentSong = musicData[currentSongIndex];
+            if (currentSong && currentSong.id === id) {
+                likeBtn.classList.remove('active');
+            }
+        }
+    }
+
+
+    // Toggle sidebar
+    function toggleSidebar() {
+        body.classList.toggle('sidebar-open');
+    }
+
+    // Swipe functionality with Hammer.js
+    function setupSwipe() {
+        if (typeof Hammer === 'undefined') {
+            console.error('Hammer.js is not loaded.');
+            return;
+        }
+        const hammer = new Hammer(musicCard);
+
+        hammer.on('swipeleft', function() {
+            dislikeSong();
+        });
+
+        hammer.on('swiperight', function() {
+            likeSong();
+        });
+
+        // Tap to play/pause can conflict with button clicks.
+        // It's generally better to use explicit play/pause buttons.
+        // hammer.on('tap', function() {
+        //     togglePlay();
+        // });
+    }
+
+    // Theme toggle
+    function toggleTheme() {
+        body.classList.toggle('light-theme');
+        const icon = themeToggle.querySelector('i');
+        if (body.classList.contains('light-theme')) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+    }
+
+    // Event listeners
+    function setupEventListeners() {
+        playPauseBtn.addEventListener('click', togglePlay);
+        likeBtn.addEventListener('click', likeSong);
+        dislikeBtn.addEventListener('click', dislikeSong);
+        themeToggle.addEventListener('click', toggleTheme);
+        favoritesBtn.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        // Progress bar events
+        audioPlayer.addEventListener('timeupdate', updateProgress);
+        progress.addEventListener('input', function() {
+            const duration = audioPlayer.duration;
+            if (duration > 0) {
+                 audioPlayer.currentTime = (this.value / 100) * duration;
+            }
+        });
+        // 'change' eventi 'input' ile benzer işlevi görüyor, genellikle biri yeterlidir.
+        // progress.addEventListener('change', function() {
+        //     const duration = audioPlayer.duration;
+        //     if (duration > 0) {
+        //         audioPlayer.currentTime = (this.value / 100) * duration;
+        //     }
+        // });
+
+
+        // Click on progress container
+        const progressContainer = document.querySelector('.progress-container');
+        if (progressContainer) {
+            progressContainer.addEventListener('click', setProgress);
+        }
+
+
+        // When song ends, play next
+        audioPlayer.addEventListener('ended', nextSong);
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            // Input, textarea gibi alanlara odaklanıldığında klavye kısayollarını devre dışı bırak
+            const activeElement = document.activeElement;
+            if (activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA' || activeElement.isContentEditable)) {
+                return;
+            }
+
+            switch(e.key) {
+                case ' ': // Space
+                    e.preventDefault(); // Sayfanın kaymasını engelle
+                    togglePlay();
+                    break;
+                case 'ArrowRight':
+                    // Like butonu yerine bir sonraki şarkıya geçiş daha mantıklı olabilir
+                    // veya ses seviyesini artırma gibi bir işlev eklenebilir.
+                    // Şimdilik likeSong() olarak bırakıyorum.
+                    likeSong();
+                    break;
+                case 'ArrowLeft':
+                    // Dislike butonu yerine bir önceki şarkıya geçiş daha mantıklı olabilir
+                    // veya ses seviyesini azaltma gibi bir işlev eklenebilir.
+                    // Şimdilik dislikeSong() olarak bırakıyorum.
+                    dislikeSong();
+                    break;
+                // ArrowUp ve ArrowDown için bir işlev tanımlanmamış, isterseniz ekleyebilirsiniz.
+                // Örneğin:
+                // case 'ArrowUp':
+                //     nextSong(); // Veya ses artırma
+                //     break;
+                // case 'ArrowDown':
+                //     prevSong(); // Veya ses azaltma
+                //     break;
+                case 'Escape':
+                    if (body.classList.contains('sidebar-open')) {
+                        toggleSidebar();
+                    }
+                    break;
+            }
+        });
+    }
+
+    // Initialize the app
+    init();
 });
