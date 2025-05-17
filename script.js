@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: "Levitating",
             artist: "Dua Lipa",
             year: "2020",
-            image: "https://i.scdn.co/image/ab67616d0000b273f6de355783e42c7c357cfc78",
+            image: "https://t2.genius.com/unsafe/258x258/https%3A%2F%2Fimages.genius.com%2F396ec949e9108207f0fc1ee7595b7da6.1000x1000x1.png",
             audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
         },
         {
