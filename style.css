@@ -134,12 +134,12 @@ body.sidebar-open .overlay {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 22px;
-    font-weight: 700;
-    background: linear-gradient(45deg, var(--primary-color), #ff00ff);
-    -webkit-background-clip: text;
-    background-clip: text;
+   width: 94px;
+  height: 94px;
+  border-radius: 50%;
+  object-fit: cover;
     color: transparent;
+     background-image: url("tunezz.png");
 }
 
 .logo i {
