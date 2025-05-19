@@ -590,3 +590,34 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize the app
     init();
 });
+
+// Bildirim
+// Bildirim izin verme
+if (Notification.permission === "granted") {
+  // Bildirim izni zaten verilmiş
+  showNotification();
+} else if (Notification.permission !== "denied") {
+  // Kullanıcıdan izin iste
+  Notification.requestPermission().then(permission => {
+    if (permission === "granted") {
+      showNotification();
+    }
+  });
+}
+
+
+function showNotification() {
+  const notification = new Notification("SociRss", {
+    body: "Yeni bir gönderi var!",
+    icon: "icon.png" // Bildirim ikonu (isteğe bağlı)
+  });
+
+  // Bildirime tıklanınca yapılacaklar
+  notification.onclick = () => {
+    window.focus();
+    // Veya belirli bir sayfaya yönlendir:
+    // window.location.href = "https://ornek.com/gonderi";
+  };
+}
+
+
