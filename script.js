@@ -607,7 +607,7 @@ if (Notification.permission === "granted") {
 
 
 function showNotification() {
-  const notification = new Notification("SociRss", {
+  const notification = new Notification("Tunezz Music App", {
     body: "Hoşgeldiniz Tunezz Musik Her Yerde Yanınızda.",
     icon: "tunezz.png" // Bildirim ikonu (isteğe bağlı)
   });
