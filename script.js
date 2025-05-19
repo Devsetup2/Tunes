@@ -123,19 +123,19 @@ document.addEventListener('DOMContentLoaded', function() {
         },
          {
             id: 13,
-            title: "",
-            artist: "",
-            year: "",
-            image: "",
-            audio: ""
+            title: "Harley Bird",
+            artist: "Jordan Schor",
+            year: "2017",
+            image: "https://raw.githubusercontent.com/AAdewunmi/Music-Player-App/refs/heads/master/images/music-1.jpg",
+            audio: "https://devsetup2.github.io/Tunes/harleybird.mp3"
         },
         {
             id: 14,
-            title: "",
-            artist: "",
-            year: "",
-            image: "",
-            audio: ""
+            title: "Anywhere",
+            artist: "Ikson",
+            year: "2018",
+            image: "https://github.com/AAdewunmi/Music-Player-App/blob/master/images/music-2.jpg?raw=true",
+            audio: "https://devsetup2.github.io/Tunes/anywhere.mp3"
         },
         {
             id: 15,
