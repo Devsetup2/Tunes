@@ -139,10 +139,10 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         {
             id: 15,
-            title: "",
-            artist: "",
-            year: "",
-            image: "https://devsetup2.github.io/Tunes/Tunezz bg.png",
+            title: "ASpark İn Havana",
+            artist: "Muammer & Suno",
+            year: "2025",
+            image: "https://devsetup2.github.io/Tunes/havana.jpeg",
             audio: ""
         },
         {
