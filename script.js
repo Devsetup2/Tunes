@@ -608,8 +608,8 @@ if (Notification.permission === "granted") {
 
 function showNotification() {
   const notification = new Notification("SociRss", {
-    body: "Yeni bir gönderi var!",
-    icon: "icon.png" // Bildirim ikonu (isteğe bağlı)
+    body: "Hoşgeldiniz Tunezz Musik Her Yerde Yanınızda.",
+    icon: "tunezz.png" // Bildirim ikonu (isteğe bağlı)
   });
 
   // Bildirime tıklanınca yapılacaklar
