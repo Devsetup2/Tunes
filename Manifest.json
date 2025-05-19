@@ -1,0 +1,21 @@
+{
+    "name": "Tunezz",
+    "description": "Tunezz is an unusual, original, powerful music application that allows you to discover music.",
+    "short_name": "Tunezz",
+    "icons": [
+       {
+          "src": "tunezz192",
+          "sizes": "192x192",
+          "type": "image/png"
+       },
+       {
+          "src": "tunezz512",
+          "sizes": "512x512",
+          "type": "image/png"
+       }
+    ],
+    "start_url": "https://devsetup2.github.io/Tunes/",
+    "display": "standalone",
+    "theme_color": "##8a2be2",
+    "background_color": "#121212"
+ }
