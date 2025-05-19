@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: "",
             artist: "",
             year: "",
-            image: "",
+            image: "https://devsetup2.github.io/Tunes/Tunezz bg.png",
             audio: ""
         },
         {
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: "",
             artist: "",
             year: "",
-            image: "",
+            image: "https://devsetup2.github.io/Tunes/Tunezz bg.png",
             audio: ""
         },
         {
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: "",
             artist: "",
             year: "",
-            image: "",
+            image: "https://devsetup2.github.io/Tunes/Tunezz bg.png",
             audio: ""
         },
         {
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: "",
             artist: "",
             year: "",
-            image: "",
+            image: "https://devsetup2.github.io/Tunes/Tunezz bg.png",
             audio: ""
         },
         {
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: "",
             artist: "",
             year: "",
-            image: "",
+            image: "https://devsetup2.github.io/Tunes/Tunezz bg.png",
             audio: ""
         },
         
