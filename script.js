@@ -25,8 +25,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Music data
     const musicData = [
+         {
+           
+            title: "Fire",
+            artist: "Muammer & Suno",
+            year: "2023",
+            image: "https://i.ytimg.com/vi/6uKO4zvnND4/maxresdefault.jpg",
+            audio: "https://devsetup2.github.io/Tunes/Fire.mp3"
+        },
         {
-            id: 1,
+          
             title: "Blinding Lights",
             artist: "The Weeknd",
             year: "2020",
@@ -34,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
         },
         {
-            id: 2,
+           
             title: "Save Your Tears",
             artist: "The Weeknd",
             year: "2020",
@@ -42,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
         },
         {
-            id: 3,
+            
             title: "Stay",
             artist: "The Kid LAROI, Justin Bieber",
             year: "2021",
@@ -50,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
         },
         {
-            id: 4,
+            
             title: "good 4 u",
             artist: "Olivia Rodrigo",
             year: "2021",
@@ -58,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
         },
         {
-            id: 5,
+            
             title: "Levitating",
             artist: "Dua Lipa",
             year: "2020",
@@ -66,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
         },
         {
-            id: 6,
+          
             title: "What Kind Of Life",
             artist: "Muammer Altunkan",
             year: "2024",
@@ -74,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://devsetup2.github.io/Tunes/whatkindlife.mp3"
         },
         {
-            id: 7,
+            
             title: "My Years Without You",
             artist: "Muammer Altunkan",
             year: "2024",
@@ -82,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://devsetup2.github.io/Tunes/myyearswithoutyou.mp3"
         },
         {
-            id: 8,
+           
             title: "Summer Time",
             artist: "Muammer Altunkan",
             year: "2024",
@@ -90,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://devsetup2.github.io/Tunes/summertime.mp3"
         },
         {
-            id: 9,
+           
             title: "Whispers Of Autumn",
             artist: "Muammer Altunkan",
             year: "2024",
@@ -98,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://devsetup2.github.io/Tunes/whispersofautumn.mp3"
         },
         {
-            id: 10,
+          
             title: "Lazy Tired",
             artist: "Muammer Altunkan",
             year: "2024",
@@ -106,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://devsetup2.github.io/Tunes/lazytired.mp3"
         },
         {
-            id: 11,
+          
             title: "Deceived",
             artist: "Muammer Altunkan",
             year: "2024",
@@ -114,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://devsetup2.github.io/Tunes/deceived.mp3"
         },
         {
-            id: 12,
+            
             title: "Whispers Of Autumn",
             artist: "Muammer Altunkan",
             year: "2024",
@@ -122,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://devsetup2.github.io/Tunes/dancealone.mp3"
         },
          {
-            id: 13,
+            
             title: "Harley Bird",
             artist: "Jordan Schor",
             year: "2017",
@@ -130,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://devsetup2.github.io/Tunes/harleybird.mp3"
         },
         {
-            id: 14,
+           
             title: "Anywhere",
             artist: "Ikson",
             year: "2018",
@@ -138,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "https://devsetup2.github.io/Tunes/anywhere.mp3"
         },
         {
-            id: 15,
+           
             title: "ASpark İn Havana",
             artist: "Muammer & Suno",
             year: "2025",
@@ -146,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "asparkinhavana.mp3"
         },
         {
-            id: 16,
+          
             title: "Come On Push",
             artist: "Alesandra",
             year: "2025",
@@ -154,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: "comeonpush.mp3"
         },
         {
-            id: 17,
+          
             title: "",
             artist: "",
             year: "",
@@ -162,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: ""
         },
         {
-            id: 18,
+           
             title: "",
             artist: "",
             year: "",
@@ -170,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: ""
         },
         {
-            id: 19,
+           
             title: "",
             artist: "",
             year: "",
@@ -178,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
             audio: ""
         },
         {
-            id: 20,
+           
             title: "",
             artist: "",
             year: "",
@@ -608,7 +616,7 @@ if (Notification.permission === "granted") {
 
 function showNotification() {
   const notification = new Notification("Tunezz Music App", {
-    body: "Hoşgeldiniz Tunezz Musik Her Yerde Yanınızda.",
+    body: "Yeni Şarkı Fire",
     icon: "tunezz.png" // Bildirim ikonu (isteğe bağlı)
   });
 
@@ -616,7 +624,7 @@ function showNotification() {
   notification.onclick = () => {
     window.focus();
     // Veya belirli bir sayfaya yönlendir:
-     window.location.href = "https://www.instagram.com/setup.dev42";
+    // window.location.href = "https://www.instagram.com/setup.dev42";
   };
 }
 
