@@ -143,15 +143,15 @@ document.addEventListener('DOMContentLoaded', function() {
             artist: "Muammer & Suno",
             year: "2025",
             image: "https://devsetup2.github.io/Tunes/havana.jpeg",
-            audio: ""
+            audio: "asparkinhavana.mp3"
         },
         {
             id: 16,
-            title: "",
-            artist: "",
-            year: "",
-            image: "https://devsetup2.github.io/Tunes/Tunezz bg.png",
-            audio: ""
+            title: "Come On Push",
+            artist: "Alesandra",
+            year: "2025",
+            image: "https://devsetup2.github.io/Tunes/sexywomen.jpg",
+            audio: "comeonpush.mp3"
         },
         {
             id: 17,
