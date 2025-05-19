@@ -121,6 +121,70 @@ document.addEventListener('DOMContentLoaded', function() {
             image: "https://devsetup2.github.io/Tunes/Dance%20Alone.webp",
             audio: "https://devsetup2.github.io/Tunes/dancealone.mp3"
         },
+         {
+            id: 13,
+            title: "",
+            artist: "",
+            year: "",
+            image: "",
+            audio: ""
+        },
+        {
+            id: 14,
+            title: "",
+            artist: "",
+            year: "",
+            image: "",
+            audio: ""
+        },
+        {
+            id: 15,
+            title: "",
+            artist: "",
+            year: "",
+            image: "",
+            audio: ""
+        },
+        {
+            id: 16,
+            title: "",
+            artist: "",
+            year: "",
+            image: "",
+            audio: ""
+        },
+        {
+            id: 17,
+            title: "",
+            artist: "",
+            year: "",
+            image: "",
+            audio: ""
+        },
+        {
+            id: 18,
+            title: "",
+            artist: "",
+            year: "",
+            image: "",
+            audio: ""
+        },
+        {
+            id: 19,
+            title: "",
+            artist: "",
+            year: "",
+            image: "",
+            audio: ""
+        },
+        {
+            id: 20,
+            title: "",
+            artist: "",
+            year: "",
+            image: "",
+            audio: ""
+        },
         
     ];
 
