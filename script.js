@@ -616,7 +616,7 @@ function showNotification() {
   notification.onclick = () => {
     window.focus();
     // Veya belirli bir sayfaya yönlendir:
-    // window.location.href = "https://ornek.com/gonderi";
+     window.location.href = "https://www.instagram.com/setup.dev42";
   };
 }
 
