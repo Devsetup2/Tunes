@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
           artist: "Muammer & Suno",
           year: "2023",
           image: "https://devsetup2.github.io/Tunes/fire.png",
-          audio: "https://devsetup2.github.io/Tunes/Fire.mp3"
+          audio: "https://devsetup2.github.io/Tunes/fire.mp3"
         },
         {
           id: 2,
