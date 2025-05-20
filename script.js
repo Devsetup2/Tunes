@@ -616,16 +616,10 @@ if (Notification.permission === "granted") {
 
 function showNotification() {
   const notification = new Notification("Tunezz Music App", {
-    body: "Yeni Şarkı Fire",
+    body: "Yenileniyoruz Beklemede Kalın :) ",
     icon: "tunezz.png" // Bildirim ikonu (isteğe bağlı)
   });
 
-  // Bildirime tıklanınca yapılacaklar
-  notification.onclick = () => {
-    window.focus();
-    // Veya belirli bir sayfaya yönlendir:
-    // window.location.href = "https://www.instagram.com/setup.dev42";
-  };
-}
+ 
 
 
