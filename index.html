@@ -2,10 +2,10 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>Tunezz V1.1</title>
-  <link rel="icon" type="image/x-icon" href="favicon.svg">
+  <title>Tunezz</title>
+   <link rel="icon" type="image/x-icon" href="favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!--Seo-->
+   <!--Seo-->
   <meta name="description" content="Tunezz music app android music player">
   <meta name="keywords" content="tunezz, music player, music,spotify,Deezer,Apple Music,Youtube Music,Apple Music,Amazon Music, free music, music application ">
   <meta name="author" content="Muammer Altunkan">
@@ -15,21 +15,31 @@
 <meta name="apple-mobile-web-app-title" content="Tunezz Music App">
 <meta name="msapplication-TileImage" content="./tunezz144">
 <meta name="msapplication-TileColor" content="#8a2be2">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-  <link rel="stylesheet" href="./style.css">
- </head>
+  <!--css-->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" href="./style.css">
+
+</head>
 <body>
-   
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tunezz - Müzik Keşfet</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="overlay"></div>
 
     <nav class="navbar">
         <div class="navbar-left">
-            <div class="animate__animated animate__swing">
             <div class="logo">
+                <div class="animate__animated animate__swing">
                 <i class="fas fa-music"></i>
                 <span>Tunezz</span>
             </div>
@@ -57,17 +67,17 @@
                     </div>
                 </div>
             </div>
-
+            
             <div class="progress-container">
                 <div class="progress-bar"></div>
                 <input type="range" class="progress" min="0" max="100" value="0">
             </div>
-
+            
             <div class="time-info">
                 <span class="current-time">0:00</span>
                 <span class="duration">0:00</span>
             </div>
-
+            
             <div class="player-controls">
                 <button class="control-btn dislike"><i class="fas fa-times"></i></button>
                 <button class="control-btn play-pause"><i class="fas fa-play"></i></button>
@@ -84,11 +94,17 @@
             </button>
         </div>
         <div class="favorites-list">
-            </div>
+            <!-- Favorites will be added here dynamically -->
+        </div>
     </div>
 
     <audio id="audio-player"></audio>
-   <script src="script.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
-    </body>
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
 </html>
