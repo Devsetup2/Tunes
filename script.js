@@ -169,6 +169,14 @@ document.addEventListener('DOMContentLoaded', function() {
            image: "https://devsetup2.github.io/Tunes/comeonpush.png",
            audio: "https://devsetup2.github.io/Tunes/comeonpush.mp3"
        }
+            {
+          id: 1,
+          title: "Climb",
+          artist: "Muammer & Suno",
+          year: "2020",
+          image: "https://townsquare.media/site/252/files/2021/06/attachment-miley-cyrus-the-climb.jpg?w=980&q=75",
+          audio: "https://devsetup2.github.io/Tunes/climb.mp3"
+        },
         
       ];
 
