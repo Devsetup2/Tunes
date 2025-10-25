@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor AI Kod Editörü</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #1e1e1e;
+            --bg-secondary: #252526;
+            --bg-tertiary: #2d2d30;
+            --text-primary: #cccccc;
+            --text-secondary: #969696;
+            --accent-color: #007acc;
+            --accent-hover: #005a9e;
+            --border-color: #3e3e42;
+            --success-color: #4CAF50;
+            --error-color: #f44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .sidebar-menu {
+            flex: 1;
+            padding: 10px 0;
+        }
+
+        .menu-item {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .menu-item:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .menu-item.active {
+            background-color: var(--accent-color);
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .file-tabs {
+            display: flex;
+            overflow-x: auto;
+        }
+
+        .file-tab {
+            padding: 8px 15px;
+            background-color: var(--bg-tertiary);
+            border-right: 1px solid var(--border-color);
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+        }
+
+        .file-tab.active {
+            background-color: var(--bg-primary);
+        }
+
+        .file-tab i {
+            margin-left: 8px;
+            cursor: pointer;
+        }
+
+        .editor-container {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .file-explorer {
+            width: 250px;
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .file-explorer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .file-actions button {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .file-list {
+            list-style: none;
+            flex: 1;
+        }
+
+        .file-item {
+            padding: 5px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .file-item:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .file-item.active {
+            background-color: var(--accent-color);
+        }
+
+        .file-item i {
+            margin-right: 8px;
+        }
+
+        .file-item-actions {
+            display: none;
+        }
+
+        .file-item:hover .file-item-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .file-item-actions button {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .editor-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-toolbar {
+            padding: 8px 15px;
+            background-color: var(--bg-tertiary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .editor-toolbar button {
+            background-color: var(--accent-color);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .editor-toolbar button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .editor {
+            flex: 1;
+            background-color: var(--bg-primary);
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .code-input {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            color: var(--text-primary);
+            border: none;
+            outline: none;
+            resize: none;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 15px;
+            tab-size: 4;
+        }
+
+        .ai-assistant {
+            width: 300px;
+            background-color: var(--bg-secondary);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-header {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-conversation {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 90%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: var(--accent-color);
+            align-self: flex-end;
+        }
+
+        .ai-message {
+            background-color: var(--bg-tertiary);
+            align-self: flex-start;
+        }
+
+        .ai-input {
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+        }
+
+        .ai-input input {
+            flex: 1;
+            padding: 10px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .ai-input button {
+            margin-left: 10px;
+            padding: 10px 15px;
+            background-color: var(--accent-color);
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .ai-input button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--bg-secondary);
+            width: 500px;
+            max-width: 90%;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 15px;
+            background-color: var(--bg-tertiary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .modal-footer {
+            padding: 15px;
+            background-color: var(--bg-tertiary);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 60px;
+            }
+            
+            .sidebar-header h1, .menu-item span {
+                display: none;
+            }
+            
+            .menu-item i {
+                margin-right: 0;
+            }
+            
+            .file-explorer {
+                width: 200px;
+            }
+            
+            .ai-assistant {
+                width: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: absolute;
+                height: 100%;
+                z-index: 100;
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .file-explorer {
+                position: absolute;
+                height: 100%;
+                z-index: 90;
+                transform: translateX(-100%);
+            }
+            
+            .file-explorer.open {
+                transform: translateX(0);
+            }
+            
+            .ai-assistant {
+                position: absolute;
+                height: 100%;
+                right: 0;
+                z-index: 90;
+                transform: translateX(100%);
+            }
+            
+            .ai-assistant.open {
+                transform: translateX(0);
+            }
+            
+            .menu-toggle {
+                display: block !important;
+            }
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .status-bar {
+            padding: 5px 15px;
+            background-color: var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .context-menu {
+            position: absolute;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 5px 0;
+            z-index: 1000;
+            display: none;
+        }
+
+        .context-menu-item {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+        .context-menu-item:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 4px;
+            z-index: 2000;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>Cursor AI</h1>
+                <button class="menu-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item active" data-panel="explorer">
+                    <i class="fas fa-folder"></i>
+                    <span>Dosyalar</span>
+                </div>
+                <div class="menu-item" data-panel="search">
+                    <i class="fas fa-search"></i>
+                    <span>Ara</span>
+                </div>
+                <div class="menu-item" data-panel="git">
+                    <i class="fas fa-code-branch"></i>
+                    <span>Git</span>
+                </div>
+                <div class="menu-item" id="settingsBtn" data-panel="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Ayarlar</span>
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <div class="menu-item" id="aiPanelBtn" data-panel="ai">
+                    <i class="fas fa-robot"></i>
+                    <span>AI Asistan</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="top-bar">
+                <div class="file-tabs" id="fileTabs">
+                    <!-- Dosya sekmeleri burada oluşturulacak -->
+                </div>
+                <div>
+                    <button class="menu-toggle" id="explorerToggle">
+                        <i class="fas fa-folder"></i>
+                    </button>
+                    <button class="menu-toggle" id="aiToggle">
+                        <i class="fas fa-robot"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="editor-container">
+                <!-- File Explorer -->
+                <div class="file-explorer" id="fileExplorer">
+                    <div class="file-explorer-header">
+                        <h3>PROJELER</h3>
+                        <div class="file-actions">
+                            <button id="newProjectBtn" title="Yeni Proje">
+                                <i class="fas fa-folder-plus"></i>
+                            </button>
+                            <button id="refreshProjects" title="Yenile">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="file-list" id="projectList">
+                        <!-- Projeler burada listelenecek -->
+                        <div class="empty-state" id="emptyProjects">
+                            <i class="fas fa-folder-open"></i>
+                            <p>Henüz proje yok</p>
+                            <button class="btn btn-primary" id="createFirstProject" style="margin-top: 10px;">İlk Projeni Oluştur</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Editor Area -->
+                <div class="editor-area">
+                    <div class="editor-toolbar">
+                        <div>
+                            <button id="runButton"><i class="fas fa-play"></i> Çalıştır</button>
+                            <button id="saveButton"><i class="fas fa-save"></i> Kaydet</button>
+                        </div>
+                        <div>
+                            <button id="terminalButton"><i class="fas fa-terminal"></i> Terminal</button>
+                        </div>
+                    </div>
+                    <div class="editor">
+                        <div class="empty-state" id="emptyEditor">
+                            <i class="fas fa-file-code"></i>
+                            <p>Düzenlemek için bir dosya seçin</p>
+                        </div>
+                        <textarea class="code-input" id="codeEditor" style="display: none;"></textarea>
+                    </div>
+                </div>
+
+                <!-- AI Assistant -->
+                <div class="ai-assistant" id="aiAssistant">
+                    <div class="ai-header">
+                        <h3>AI Asistan</h3>
+                        <button id="clearChat">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="ai-conversation" id="aiConversation">
+                        <div class="message ai-message">
+                            Merhaba! Ben AI kod asistanınız. Kodunuzla ilgili sorularınızı sorabilir veya yardım isteyebilirsiniz.
+                        </div>
+                    </div>
+                    <div class="ai-input">
+                        <input type="text" id="aiInput" placeholder="AI'ya soru sorun...">
+                        <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-bar">
+                <div id="fileEncoding">UTF-8</div>
+                <div id="fileLanguage">Dosya seçilmedi</div>
+                <div id="cursorPosition">Satır 1, Sütun 1</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ayarlar</h3>
+                <button id="closeSettings">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="apiKey">API Anahtarı</label>
+                    <input type="password" id="apiKey" placeholder="AI servisi API anahtarınızı girin">
+                    <small style="color: var(--text-secondary); margin-top: 5px; display: block;">API anahtarınız güvenli bir şekilde saklanır ve yalnızca AI asistanı ile iletişim kurmak için kullanılır.</small>
+                </div>
+                <div class="form-group">
+                    <label for="theme">Tema</label>
+                    <select id="theme">
+                        <option value="dark">Koyu Tema</option>
+                        <option value="light">Açık Tema</option>
+                        <option value="high-contrast">Yüksek Kontrast</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fontSize">Yazı Boyutu</label>
+                    <input type="number" id="fontSize" value="14" min="10" max="24">
+                </div>
+                <div class="form-group">
+                    <label for="autoSave">
+                        <input type="checkbox" id="autoSave"> Otomatik Kaydet
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelSettings">İptal</button>
+                <button class="btn btn-primary" id="saveSettings">Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Project Modal -->
+    <div class="modal" id="newProjectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Yeni Proje Oluştur</h3>
+                <button id="closeNewProject">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="projectName">Proje Adı</label>
+                    <input type="text" id="projectName" placeholder="Proje adını girin">
+                </div>
+                <div class="form-group">
+                    <label for="projectType">Proje Türü</label>
+                    <select id="projectType">
+                        <option value="html">Web Projesi (HTML/CSS/JS)</option>
+                        <option value="python">Python Projesi</option>
+                        <option value="node">Node.js Projesi</option>
+                        <option value="react">React Projesi</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="projectDescription">Açıklama (İsteğe Bağlı)</label>
+                    <textarea id="projectDescription" rows="3" placeholder="Proje açıklaması"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelNewProject">İptal</button>
+                <button class="btn btn-primary" id="createProject">Oluştur</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New File Modal -->
+    <div class="modal" id="newFileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Yeni Dosya Oluştur</h3>
+                <button id="closeNewFile">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="fileName">Dosya Adı</label>
+                    <input type="text" id="fileName" placeholder="Dosya adını girin (örn: index.html)">
+                </div>
+                <div class="form-group">
+                    <label for="fileType">Dosya Türü</label>
+                    <select id="fileType">
+                        <option value="html">HTML Dosyası</option>
+                        <option value="css">CSS Dosyası</option>
+                        <option value="js">JavaScript Dosyası</option>
+                        <option value="py">Python Dosyası</option>
+                        <option value="txt">Metin Dosyası</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelNewFile">İptal</button>
+                <button class="btn btn-primary" id="createFile">Oluştur</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div class="context-menu" id="contextMenu">
+        <div class="context-menu-item" id="contextNewFile">Yeni Dosya</div>
+        <div class="context-menu-item" id="contextRename">Yeniden Adlandır</div>
+        <div class="context-menu-item" id="contextDelete">Sil</div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Uygulama durumu
+        const state = {
+            projects: [],
+            activeProject: null,
+            activeFile: null,
+            openFiles: [],
+            settings: {
+                apiKey: '',
+                theme: 'dark',
+                fontSize: 14,
+                autoSave: true
+            }
+        };
+
+        // DOM Elements
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const fileExplorer = document.getElementById('fileExplorer');
+        const explorerToggle = document.getElementById('explorerToggle');
+        const aiAssistant = document.getElementById('aiAssistant');
+        const aiToggle = document.getElementById('aiToggle');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const closeSettings = document.getElementById('closeSettings');
+        const cancelSettings = document.getElementById('cancelSettings');
+        const saveSettings = document.getElementById('saveSettings');
+        const newProjectBtn = document.getElementById('newProjectBtn');
+        const newProjectModal = document.getElementById('newProjectModal');
+        const closeNewProject = document.getElementById('closeNewProject');
+        const cancelNewProject = document.getElementById('cancelNewProject');
+        const createProject = document.getElementById('createProject');
+        const newFileModal = document.getElementById('newFileModal');
+        const closeNewFile = document.getElementById('closeNewFile');
+        const cancelNewFile = document.getElementById('cancelNewFile');
+        const createFile = document.getElementById('createFile');
+        const aiInput = document.getElementById('aiInput');
+        const sendMessage = document.getElementById('sendMessage');
+        const aiConversation = document.getElementById('aiConversation');
+        const clearChat = document.getElementById('clearChat');
+        const codeEditor = document.getElementById('codeEditor');
+        const emptyEditor = document.getElementById('emptyEditor');
+        const projectList = document.getElementById('projectList');
+        const emptyProjects = document.getElementById('emptyProjects');
+        const createFirstProject = document.getElementById('createFirstProject');
+        const fileTabs = document.getElementById('fileTabs');
+        const runButton = document.getElementById('runButton');
+        const saveButton = document.getElementById('saveButton');
+        const terminalButton = document.getElementById('terminalButton');
+        const contextMenu = document.getElementById('contextMenu');
+        const contextNewFile = document.getElementById('contextNewFile');
+        const contextRename = document.getElementById('contextRename');
+        const contextDelete = document.getElementById('contextDelete');
+        const refreshProjects = document.getElementById('refreshProjects');
+        const notification = document.getElementById('notification');
+
+        // Sayfa yüklendiğinde
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSettings();
+            loadProjects();
+            updateUI();
+            setupEventListeners();
+            showNotification('Cursor AI Kod Editörüne Hoş Geldiniz!', 'success');
+        });
+
+        // Event Listeners
+        function setupEventListeners() {
+            // Sidebar toggle
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+            });
+
+            // Explorer toggle
+            explorerToggle.addEventListener('click', () => {
+                fileExplorer.classList.toggle('open');
+            });
+
+            // AI toggle
+            aiToggle.addEventListener('click', () => {
+                aiAssistant.classList.toggle('open');
+            });
+
+            // Settings modal
+            settingsBtn.addEventListener('click', openSettingsModal);
+            closeSettings.addEventListener('click', closeSettingsModal);
+            cancelSettings.addEventListener('click', closeSettingsModal);
+            saveSettings.addEventListener('click', saveSettingsHandler);
+
+            // Project modals
+            newProjectBtn.addEventListener('click', openNewProjectModal);
+            createFirstProject.addEventListener('click', openNewProjectModal);
+            closeNewProject.addEventListener('click', closeNewProjectModal);
+            cancelNewProject.addEventListener('click', closeNewProjectModal);
+            createProject.addEventListener('click', createProjectHandler);
+
+            // File modals
+            closeNewFile.addEventListener('click', closeNewFileModal);
+            cancelNewFile.addEventListener('click', closeNewFileModal);
+            createFile.addEventListener('click', createFileHandler);
+
+            // AI chat
+            sendMessage.addEventListener('click', sendAiMessage);
+            aiInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendAiMessage();
+                }
+            });
+            clearChat.addEventListener('click', clearChatHandler);
+
+            // Editor buttons
+            saveButton.addEventListener('click', saveFileHandler);
+            runButton.addEventListener('click', runFileHandler);
+            terminalButton.addEventListener('click', () => {
+                showNotification('Terminal özelliği yakında eklenecek!', 'info');
+            });
+
+            // Context menu
+            contextNewFile.addEventListener('click', openNewFileModal);
+            contextRename.addEventListener('click', () => {
+                showNotification('Yeniden adlandırma özelliği yakında eklenecek!', 'info');
+            });
+            contextDelete.addEventListener('click', deleteFileFromContext);
+
+            // Refresh projects
+            refreshProjects.addEventListener('click', refreshProjectsHandler);
+
+            // Auto-save
+            codeEditor.addEventListener('input', () => {
+                if (state.settings.autoSave && state.activeFile) {
+                    saveFile();
+                }
+                updateCursorPosition();
+            });
+
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === settingsModal) settingsModal.style.display = 'none';
+                if (e.target === newProjectModal) newProjectModal.style.display = 'none';
+                if (e.target === newFileModal) newFileModal.style.display = 'none';
+            });
+
+            // Context menu
+            document.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                const target = e.target.closest('.file-item');
+                if (target && target.dataset.fileId) {
+                    contextMenu.style.display = 'block';
+                    contextMenu.style.left = `${e.pageX}px`;
+                    contextMenu.style.top = `${e.pageY}px`;
+                    contextMenu.dataset.fileId = target.dataset.fileId;
+                }
+            });
+
+            document.addEventListener('click', () => {
+                contextMenu.style.display = 'none';
+            });
+        }
+
+        // Settings Functions
+        function openSettingsModal() {
+            document.getElementById('apiKey').value = state.settings.apiKey;
+            document.getElementById('theme').value = state.settings.theme;
+            document.getElementById('fontSize').value = state.settings.fontSize;
+            document.getElementById('autoSave').checked = state.settings.autoSave;
+            settingsModal.style.display = 'flex';
+        }
+
+        function closeSettingsModal() {
+            settingsModal.style.display = 'none';
+        }
+
+        function saveSettingsHandler() {
+            state.settings.apiKey = document.getElementById('apiKey').value;
+            state.settings.theme = document.getElementById('theme').value;
+            state.settings.fontSize = document.getElementById('fontSize').value;
+            state.settings.autoSave = document.getElementById('autoSave').checked;
+            
+            saveSettingsToStorage();
+            applySettings();
+            settingsModal.style.display = 'none';
+            showNotification('Ayarlar kaydedildi!', 'success');
+        }
+
+        // Project Functions
+        function openNewProjectModal() {
+            document.getElementById('projectName').value = '';
+            document.getElementById('projectDescription').value = '';
+            newProjectModal.style.display = 'flex';
+        }
+
+        function closeNewProjectModal() {
+            newProjectModal.style.display = 'none';
+        }
+
+        function createProjectHandler() {
+            const projectName = document.getElementById('projectName').value.trim();
+            const projectType = document.getElementById('projectType').value;
+            const projectDescription = document.getElementById('projectDescription').value;
+            
+            if (!projectName) {
+                showNotification('Lütfen bir proje adı girin!', 'error');
+                return;
+            }
+            
+            const newProject = {
+                id: generateId(),
+                name: projectName,
+                type: projectType,
+                description: projectDescription,
+                files: [],
+                createdAt: new Date().toISOString()
+            };
+            
+            // Varsayılan dosyaları ekle
+            if (projectType === 'html') {
+                newProject.files.push({
+                    id: generateId(),
+                    name: 'index.html',
+                    type: 'html',
+                    content: `<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${projectName}</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Merhaba Dünya!</h1>
+    <p>Bu ${projectName} projesinin ana sayfasıdır.</p>
+    <script src="script.js"></script>
+</body>
+</html>`
+                });
+                
+                newProject.files.push({
+                    id: generateId(),
+                    name: 'style.css',
+                    type: 'css',
+                    content: `body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #333;
+}`
+                });
+                
+                newProject.files.push({
+                    id: generateId(),
+                    name: 'script.js',
+                    type: 'js',
+                    content: `console.log("${projectName} projesi yüklendi!");
+
+// Örnek fonksiyon
+function greet() {
+    alert("Merhaba! Bu bir örnek proje.");
+}
+
+// Sayfa yüklendiğinde çalışacak kod
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Sayfa hazır!");
+});`
+                });
+            }
+            
+            state.projects.push(newProject);
+            saveProjectsToStorage();
+            newProjectModal.style.display = 'none';
+            updateUI();
+            showNotification(`"${projectName}" projesi oluşturuldu!`, 'success');
+        }
+
+        // File Functions
+        function openNewFileModal() {
+            if (!state.activeProject) {
+                showNotification('Önce bir proje seçmelisiniz!', 'error');
+                return;
+            }
+            
+            document.getElementById('fileName').value = '';
+            newFileModal.style.display = 'flex';
+        }
+
+        function closeNewFileModal() {
+            newFileModal.style.display = 'none';
+        }
+
+        function createFileHandler() {
+            const fileName = document.getElementById('fileName').value.trim();
+            const fileType = document.getElementById('fileType').value;
+            
+            if (!fileName) {
+                showNotification('Lütfen bir dosya adı girin!', 'error');
+                return;
+            }
+            
+            const extension = getExtensionForType(fileType);
+            const fullFileName = fileName.includes('.') ? fileName : `${fileName}.${extension}`;
+            
+            // Aynı isimde dosya var mı kontrol et
+            const existingFile = state.activeProject.files.find(file => file.name === fullFileName);
+            if (existingFile) {
+                showNotification('Bu isimde bir dosya zaten var!', 'error');
+                return;
+            }
+            
+            const newFile = {
+                id: generateId(),
+                name: fullFileName,
+                type: fileType,
+                content: getDefaultContentForType(fileType, fullFileName)
+            };
+            
+            state.activeProject.files.push(newFile);
+            saveProjectsToStorage();
+            newFileModal.style.display = 'none';
+            updateUI();
+            openFile(newFile);
+            showNotification(`"${fullFileName}" dosyası oluşturuldu!`, 'success');
+        }
+
+        function deleteFileFromContext() {
+            const fileId = contextMenu.dataset.fileId;
+            const file = state.activeProject.files.find(f => f.id === fileId);
+            
+            if (file && confirm(`"${file.name}" dosyasını silmek istediğinizden emin misiniz?`)) {
+                deleteFile(fileId);
+            }
+        }
+
+        // AI Functions
+        function sendAiMessage() {
+            const message = aiInput.value.trim();
+            if (!message) return;
+
+            if (!state.settings.apiKey) {
+                showNotification('AI asistanını kullanmak için lütfen ayarlardan API anahtarınızı ekleyin.', 'error');
+                return;
+            }
+            
+            // Kullanıcı mesajını ekle
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = message;
+            aiConversation.appendChild(userMessage);
+            
+            // AI yanıtını simüle et
+            setTimeout(() => {
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'message ai-message';
+                aiMessage.textContent = getAiResponse(message);
+                aiConversation.appendChild(aiMessage);
+                aiConversation.scrollTop = aiConversation.scrollHeight;
+            }, 1000);
+            
+            aiInput.value = '';
+            aiConversation.scrollTop = aiConversation.scrollHeight;
+        }
+
+        function clearChatHandler() {
+            aiConversation.innerHTML = '<div class="message ai-message">Merhaba! Ben AI kod asistanınız. Kodunuzla ilgili sorularınızı sorabilir veya yardım isteyebilirsiniz.</div>';
+        }
+
+        // Editor Functions
+        function saveFileHandler() {
+            if (state.activeFile) {
+                saveFile();
+                showNotification('Dosya kaydedildi!', 'success');
+            } else {
+                showNotification('Kaydetmek için önce bir dosya açın!', 'error');
+            }
+        }
+
+        function runFileHandler() {
+            if (state.activeFile) {
+                if (state.activeFile.type === 'html') {
+                    const preview = window.open('', '_blank');
+                    preview.document.write(state.activeFile.content);
+                    preview.document.close();
+                    showNotification('HTML dosyası önizlemede açıldı!', 'success');
+                } else {
+                    showNotification('Bu dosya türü için çalıştırma özelliği henüz desteklenmiyor.', 'info');
+                }
+            } else {
+                showNotification('Çalıştırmak için önce bir dosya açın!', 'error');
+            }
+        }
+
+        // Utility Functions
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        function getExtensionForType(type) {
+            const extensions = {
+                'html': 'html',
+                'css': 'css',
+                'js': 'js',
+                'py': 'py',
+                'txt': 'txt'
+            };
+            return extensions[type] || 'txt';
+        }
+
+        function getDefaultContentForType(type, fileName) {
+            const defaults = {
+                'html': `<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${fileName}</title>
+</head>
+<body>
+    <h1>Merhaba Dünya!</h1>
+    <p>Bu ${fileName} dosyasıdır.</p>
+</body>
+</html>`,
+                'css': `/* ${fileName} */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}`,
+                'js': `// ${fileName}
+console.log("Merhaba Dünya!");`,
+                'py': `# ${fileName}
+print("Merhaba Dünya!")`,
+                'txt': `Bu ${fileName} dosyasıdır.`
+            };
+            return defaults[type] || '';
+        }
+
+        function getAiResponse(message) {
+            const responses = [
+                "Bu konuda size nasıl yardımcı olabilirim?",
+                "Kodunuzu iyileştirmek için bazı önerilerim var.",
+                "Bu hatayı düzeltmek için şu adımları izleyebilirsiniz...",
+                "Bu işlevi daha verimli hale getirmek istiyorsanız...",
+                "Bu kod parçasını şu şekilde optimize edebilirsiniz...",
+                "Bu sorunu çözmek için alternatif bir yaklaşım önerebilirim.",
+                "Kodunuzda şu değişiklikleri yapmayı deneyebilirsiniz...",
+                "Bu konu hakkında daha fazla bilgi için dokümantasyona bakabilirsiniz."
+            ];
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        function showNotification(message, type = 'info') {
+            notification.textContent = message;
+            notification.style.backgroundColor = type === 'success' ? '#4CAF50' : 
+                                              type === 'error' ? '#f44336' : '#007acc';
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Data Management
+        function loadSettings() {
+            const savedSettings = localStorage.getItem('cursorAI-settings');
+            if (savedSettings) {
+                state.settings = { ...state.settings, ...JSON.parse(savedSettings) };
+            }
+            applySettings();
+        }
+
+        function saveSettingsToStorage() {
+            localStorage.setItem('cursorAI-settings', JSON.stringify(state.settings));
+        }
+
+        function loadProjects() {
+            const savedProjects = localStorage.getItem('cursorAI-projects');
+            if (savedProjects) {
+                state.projects = JSON.parse(savedProjects);
+            }
+        }
+
+        function saveProjectsToStorage() {
+            localStorage.setItem('cursorAI-projects', JSON.stringify(state.projects));
+        }
+
+        function applySettings() {
+            document.documentElement.style.setProperty('--font-size', `${state.settings.fontSize}px`);
+            codeEditor.style.fontSize = `${state.settings.fontSize}px`;
+        }
+
+        // UI Updates
+        function updateUI() {
+            updateProjectList();
+            updateFileTabs();
+            updateActiveFile();
+        }
+
+        function updateProjectList() {
+            projectList.innerHTML = '';
+            
+            if (state.projects.length === 0) {
+                emptyProjects.style.display = 'block';
+                return;
+            }
+            
+            emptyProjects.style.display = 'none';
+            
+            state.projects.forEach(project => {
+                const projectElement = document.createElement('div');
+                projectElement.className = `file-item ${state.activeProject && state.activeProject.id === project.id ? 'active' : ''}`;
+                projectElement.innerHTML = `
+                    <div>
+                        <i class="fas fa-folder"></i> ${project.name}
+                    </div>
+                    <div class="file-item-actions">
+                        <button class="btn-new-file" title="Yeni Dosya"><i class="fas fa-file"></i></button>
+                        <button class="btn-delete-project" title="Projeyi Sil"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                
+                projectElement.addEventListener('click', (e) => {
+                    if (!e.target.closest('.file-item-actions')) {
+                        selectProject(project);
+                    }
+                });
+                
+                const newFileBtn = projectElement.querySelector('.btn-new-file');
+                newFileBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectProject(project);
+                    openNewFileModal();
+                });
+                
+                const deleteBtn = projectElement.querySelector('.btn-delete-project');
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (confirm(`"${project.name}" projesini silmek istediğinizden emin misiniz?`)) {
+                        deleteProject(project.id);
+                    }
+                });
+                
+                projectList.appendChild(projectElement);
+                
+                // Proje dosyalarını listele
+                project.files.forEach(file => {
+                    const fileElement = document.createElement('div');
+                    fileElement.className = `file-item ${state.activeFile && state.activeFile.id === file.id ? 'active' : ''}`;
+                    fileElement.dataset.fileId = file.id;
+                    fileElement.innerHTML = `
+                        <div>
+                            <i class="fas fa-file-code"></i> ${file.name}
+                        </div>
+                        <div class="file-item-actions">
+                            <button class="btn-delete-file" title="Dosyayı Sil"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+                    
+                    fileElement.addEventListener('click', (e) => {
+                        if (!e.target.closest('.file-item-actions')) {
+                            selectProject(project);
+                            openFile(file);
+                        }
+                    });
+                    
+                    const deleteFileBtn = fileElement.querySelector('.btn-delete-file');
+                    deleteFileBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (confirm(`"${file.name}" dosyasını silmek istediğinizden emin misiniz?`)) {
+                            deleteFile(file.id);
+                        }
+                    });
+                    
+                    projectList.appendChild(fileElement);
+                });
+            });
+        }
+
+        function updateFileTabs() {
+            fileTabs.innerHTML = '';
+            
+            state.openFiles.forEach(file => {
+                const tab = document.createElement('div');
+                tab.className = `file-tab ${state.activeFile && state.activeFile.id === file.id ? 'active' : ''}`;
+                tab.innerHTML = `
+                    ${file.name} <i class="fas fa-times"></i>
+                `;
+                
+                tab.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('fa-times')) {
+                        openFile(file);
+                    }
+                });
+                
+                const closeBtn = tab.querySelector('.fa-times');
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    closeFile(file.id);
+                });
+                
+                fileTabs.appendChild(tab);
+            });
+        }
+
+        function updateActiveFile() {
+            if (state.activeFile) {
+                emptyEditor.style.display = 'none';
+                codeEditor.style.display = 'block';
+                codeEditor.value = state.activeFile.content;
+                
+                // Dosya diline göre syntax highlighting (basit)
+                const language = state.activeFile.type;
+                document.getElementById('fileLanguage').textContent = language.toUpperCase();
+                
+                // İmleç konumunu güncelle
+                updateCursorPosition();
+            } else {
+                emptyEditor.style.display = 'block';
+                codeEditor.style.display = 'none';
+                document.getElementById('fileLanguage').textContent = 'Dosya seçilmedi';
+            }
+        }
+
+        function updateCursorPosition() {
+            const textarea = codeEditor;
+            const text = textarea.value.substr(0, textarea.selectionStart);
+            const lines = text.split('\n');
+            const line = lines.length;
+            const column = lines[lines.length - 1].length + 1;
+            document.getElementById('cursorPosition').textContent = `Satır ${line}, Sütun ${column}`;
+        }
+
+        function selectProject(project) {
+            state.activeProject = project;
+            updateUI();
+        }
+
+        function openFile(file) {
+            // Dosya zaten açık mı kontrol et
+            if (!state.openFiles.some(f => f.id === file.id)) {
+                state.openFiles.push(file);
+            }
+            
+            state.activeFile = file;
+            updateUI();
+        }
+
+        function closeFile(fileId) {
+            state.openFiles = state.openFiles.filter(f => f.id !== fileId);
+            
+            if (state.activeFile && state.activeFile.id === fileId) {
+                state.activeFile = state.openFiles.length > 0 ? state.openFiles[state.openFiles.length - 1] : null;
+            }
+            
+            updateUI();
+        }
+
+        function saveFile() {
+            if (state.activeFile) {
+                state.activeFile.content = codeEditor.value;
+                
+                // Proje içindeki dosyayı da güncelle
+                if (state.activeProject) {
+                    const projectFile = state.activeProject.files.find(f => f.id === state.activeFile.id);
+                    if (projectFile) {
+                        projectFile.content = codeEditor.value;
+                    }
+                }
+                
+                saveProjectsToStorage();
+            }
+        }
+
+        function deleteProject(projectId) {
+            state.projects = state.projects.filter(p => p.id !== projectId);
+            
+            if (state.activeProject && state.activeProject.id === projectId) {
+                state.activeProject = null;
+                state.activeFile = null;
+                state.openFiles = [];
+            }
+            
+            saveProjectsToStorage();
+            updateUI();
+            showNotification('Proje silindi!', 'success');
+        }
+
+        function deleteFile(fileId) {
+            if (state.activeProject) {
+                state.activeProject.files = state.activeProject.files.filter(f => f.id !== fileId);
+                closeFile(fileId);
+                saveProjectsToStorage();
+                updateUI();
+                showNotification('Dosya silindi!', 'success');
+            }
+        }
+
+        function refreshProjectsHandler() {
+            loadProjects();
+            updateUI();
+            showNotification('Projeler yenilendi!', 'success');
+        }
+    </script>
+</body>
+</html>
