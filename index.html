@@ -1,98 +1,1251 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Tunezz V1.2</title>
-    <link rel="stylesheet" href="style.css" rel="stylesheet">
-  <link rel="icon" type="image/x-icon" href="favicon.svg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!--Seo-->
-  <meta name="description" content="Tunezz music app android music player">
-  <meta name="keywords" content="tunezz, music player, music,spotify,Deezer,Apple Music,Youtube Music,Apple Music,Amazon Music, free music, music application">
-  <meta name="author" content="Muammer Altunkan">
-  <!-- Add to home screen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Tunezz Music App">
-  <meta name="msapplication-TileImage" content="./tunezz144">
-  <meta name="msapplication-TileColor" content="#8a2be2">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+   <link rel="icon" type="image/x-icon" href="favicon.svg">
+    <title>Tunezz</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1DB954">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1DB954",
+                        secondary: "#191414",
+                        accent: "#535353",
+                        "background-light": "#ffffff",
+                        "background-dark": "#000000",
+                        "card-dark": "#1E1E1E",
+                        "card-light": "#282828"
+                    },
+                    fontFamily: {
+                        display: ["Poppins", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "12px",
+                    },
+                    boxShadow: {
+                        'music': '0 8px 32px rgba(0, 0, 0, 0.4)',
+                        'inner-dark': 'inset 0 2px 4px rgba(0, 0, 0, 0.6)'
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #161616 0%, #1a1a1a 100%);
+        }
+        
+        .light-mode {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%) !important;
+        }
+        
+        .light-mode .player-container {
+            background: linear-gradient(165deg, #ffffff 0%, #f9fafb 100%) !important;
+            border-color: #fff !important;
+        }
+        
+        .light-mode .glass-effect {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border-color: rgba(30, 30, 30, 0.1) !important;
+        }
+        
+        .light-mode .text-white {
+            color: #4e4e4e !important;
+        }
+
+        .light-mode .text-white:hover {
+            color: #676565 !important;
+        }
+
+        .light-mode .text-gray-300,
+        .light-mode .text-gray-400 {
+            color: #bbbbbb !important;
+        }
+        
+        .light-mode .bg-gray-800 {
+            background-color: #ffffff !important;
+        }
+        
+        .light-mode .hover\:bg-gray-800:hover {
+            background-color: #fff !important;
+        }
+        
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.3s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #2a2a2a;
+            border-radius: 10px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1DB954;
+            border-radius: 10px;
+        }
+        
+        .light-mode .custom-scrollbar::-webkit-scrollbar-track {
+            background: #e5e7eb;
+        }
+        
+        .light-mode .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #379237;
+        }
+        
+        .glass-effect {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .song-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #1e1e1e, #232323);
+        }
+        
+        .light-mode .song-card {
+            background: linear-gradient(145deg, #ffffff, #f9fafb);
+            border: 1px solid #e5e7eb;
+        }
+        
+        .song-card:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(145deg, #252525, #2a2a2a);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .light-mode .song-card:hover {
+            background: linear-gradient(145deg, #f9fafb, #f3f4f6);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+        }
+        
+        .player-container {
+            background: linear-gradient(165deg, #1e1e1e 0%, #121212 100%);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 4px;
+            background: #404040;
+            border-radius: 2px;
+            outline: none;
+        }
+        
+        .light-mode .volume-slider {
+            background: #d1d5db;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #1DB954;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /* Progress Bar Improvements */
+        .progress-container {
+            position: relative;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .progress-bar-background {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: #404040;
+            border-radius: 2px;
+        }
+
+        .progress-bar-fill {
+            position: absolute;
+            height: 4px;
+            background: #1DB954;
+            border-radius: 2px;
+            transition: width 0.1s ease;
+        }
+
+        .progress-handle {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            transform: translateX(-50%);
+            cursor: grab;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .progress-handle:hover {
+            transform: translateX(-50%) scale(1.2);
+        }
+
+        .progress-handle:active {
+            cursor: grabbing;
+            transform: translateX(-50%) scale(1.3);
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+            border: 1px solid #333;
+            border-left: 4px solid #1DB954;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 320px;
+        }
+
+        .light-mode .notification {
+            background: linear-gradient(135deg, #ffffff, #f9fafb);
+            border: 1px solid #e5e7eb;
+            border-left: 4px solid #379237;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.hide {
+            transform: translateX(400px);
+        }
+
+        .notification-icon {
+            font-size: 20px;
+            margin-right: 12px;
+            color: #1DB954;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .light-mode .notification-title {
+            color: #1f2937;
+        }
+
+        .notification-message {
+            color: #ccc;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .light-mode .notification-message {
+            color: #6b7280;
+        }
+
+        .notification-link {
+            color: #1DB954;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .notification-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-<body>
- <body>
-  <div class="overlay"></div>
+<body class="gradient-bg min-h-screen flex items-center justify-center p-4">
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
 
-  <nav class="navbar">
-    <div class="navbar-left">
-      <div class="animate__animated animate__swing">
-        <div class="logo">
-          <i class="fas fa-music"></i>
-          <span>Tunezz</span>
+    <!-- Main Player Container -->
+    <div class="player-container rounded-2xl max-w-sm w-full overflow-hidden border border-gray-800">
+        <div class="flex flex-col h-full">
+            <!-- Header -->
+            <header class="glass-effect px-6 py-4 flex justify-between items-center">
+                <button id="backButton" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-800 transition-all text-gray-300 hover:text-white">
+                    <i class="fas fa-chevron-left text-lg"></i>
+                </button>
+                <h1 class="text-lg font-bold text-white">Tunezz Music</h1>
+                <button id="menuButton" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-800 transition-all text-gray-300 hover:text-white">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 p-6 space-y-8">
+                <!-- Album Art with Progress Ring -->
+                <div class="relative w-64 h-64 mx-auto flex items-center justify-center">
+                    <svg class="w-full h-full" viewBox="0 0 100 100">
+                        <circle class="stroke-gray-800" cx="50" cy="50" fill="none" r="45" stroke-width="3"></circle>
+                    </svg>
+                    <div class="absolute w-52 h-52 rounded-full overflow-hidden shadow-music border-4 border-gray-800">
+                        <img id="albumArt" alt="Artist in a hoodie" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDctLGk2uc9LcJ0eBbzolMydgfbVukyOb0YzNnTfIlsQlee-MeudbcwZp8zeLsFyZit41m0eC7izvk5B9S-JEU6eZkG2IgAgOtOQOXA2gXMRYQGNxN9mgs_tfxiQdSbFE-rP-4Qfu_AKpTtpdJVRPD8BgE2hkYSZza7YbG2-K8yrokte2AzT_i3-tVk-4iPkoeezGOZpVGPxosRRtpOKlexUQVtlhvOVdDbBzNjI6_Puo0pJA0m_W6IgSSYY3Vr5DoPnfWf7XtU2Fk"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center p-6">
+                            <div class="text-center">
+                                <h1 id="songTitle" class="text-white text-xl font-bold tracking-tight">Let You Down</h1>
+                                <p id="artistName" class="text-gray-300 text-xs mt-1">NF</p>
+                            </div>
+                        </div>
+                    </div>
+                    <svg class="w-full h-full absolute top-0 left-0" viewBox="0 0 100 100">
+                        <circle id="progressCircle" class="progress-ring__circle stroke-primary" cx="50" cy="50" fill="none" r="45" stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round" stroke-width="3"></circle>
+                    </svg>
+                    <div id="progressDot" class="absolute w-3 h-3 bg-primary rounded-full border-2 border-gray-900 shadow-lg" style="top: 5%; left: 50%; transform: translate(-50%, -50%);"></div>
+                </div>
+                
+                <!-- Song Info -->
+                <div class="text-center space-y-2">
+                    <h2 id="songTitle2" class="text-2xl font-bold text-white truncate px-4">Let You Down</h2>
+                    <p id="artistName2" class="text-gray-400 truncate">NF</p>
+                    <p id="songGenre" class="text-sm text-primary font-medium mt-1">Hip-Hop/Rap</p>
+                </div>
+                
+                <!-- Improved Progress Bar -->
+                <div class="space-y-2">
+                    <div class="flex justify-between text-sm text-gray-400">
+                        <span id="currentTime">0:00</span>
+                        <span id="duration">3:16</span>
+                    </div>
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress-bar-background"></div>
+                        <div class="progress-bar-fill" id="progressBarFill"></div>
+                        <div class="progress-handle" id="progressHandle"></div>
+                    </div>
+                </div>
+
+                <!-- Volume Control -->
+                <div class="flex items-center space-x-3 px-2">
+                    <i class="fas fa-volume-down text-gray-400 text-sm"></i>
+                    <input type="range" id="volumeSlider" class="volume-slider flex-1" min="0" max="1" step="0.1" value="0.7">
+                    <i class="fas fa-volume-up text-gray-400 text-sm"></i>
+                </div>
+            </main>
+
+            <!-- Player Controls -->
+            <footer class="p-6 pt-4 glass-effect">
+                <div class="flex items-center justify-between">
+                    <button id="shuffleButton" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-800 transition-all text-gray-400 hover:text-white">
+                        <i class="fas fa-random text-lg"></i>
+                    </button>
+                    <button id="prevButton" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-800 transition-all text-white">
+                        <i class="fas fa-backward-step text-xl"></i>
+                    </button>
+                    <button id="playPauseButton" class="bg-primary text-black w-16 h-16 rounded-full flex items-center justify-center shadow-lg transform hover:scale-105 transition-all duration-200 hover:shadow-2xl">
+                        <i id="playPauseIcon" class="fas fa-play text-2xl pl-1"></i>
+                    </button>
+                    <button id="nextButton" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-800 transition-all text-white">
+                        <i class="fas fa-forward-step text-xl"></i>
+                    </button>
+                    <button id="repeatButton" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-800 transition-all text-gray-400 hover:text-white">
+                        <i class="fas fa-redo text-lg"></i>
+                    </button>
+                </div>
+            </footer>
         </div>
-      </div>
     </div>
-    <div class="navbar-right">
-      <button class="nav-btn favorites-btn">
-        <i class="fas fa-heart"></i>
-        <span class="favorites-count">0</span>
-      </button>
-      <button class="nav-btn theme-toggle">
-        <i class="fas fa-moon"></i>
-      </button>
-    </div>
-  </nav>
 
-  <div class="app-container">
-    <div class="music-container">
-      <div class="music-card">
-        <div class="music-image">
-          <div class="song-info">
-            <h2 class="song-title">Song Title</h2>
-            <p class="artist">Artist Name</p>
-            <p class="year">2023</p>
-          </div>
+    <!-- Menu Modal -->
+    <div id="menuModal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden transition-all backdrop-blur-sm">
+        <div class="absolute top-0 right-0 w-80 h-full bg-gradient-to-b from-gray-900 to-black shadow-2xl p-6 transform transition-transform duration-300 border-l border-gray-800">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-white">Ayarlar</h2>
+                <button id="closeMenuButton" class="text-gray-400 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-800 transition-all hover:text-white">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            
+            <!-- Scrollable Settings Content -->
+            <div class="h-[calc(100%-120px)] overflow-y-auto custom-scrollbar pr-2">
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wider">Müzik Servisleri</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-3 rounded-lg bg-gray-800/50">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                                        <i class="fab fa-spotify text-white text-sm"></i>
+                                    </div>
+                                    <span class="text-white text-sm">Spotify</span>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="spotifyToggle" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                </label>
+                            </div>
+                            <div class="flex justify-between items-center p-3 rounded-lg bg-gray-800/50">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+                                        <i class="fab fa-deezer text-white text-sm"></i>
+                                    </div>
+                                    <span class="text-white text-sm">Deezer</span>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="deezerToggle" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wider">Görünüm</h3>
+                        <div class="flex justify-between items-center p-3 rounded-lg bg-gray-800/50">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-moon text-white text-sm"></i>
+                                </div>
+                                <span class="text-white text-sm">Koyu Mod</span>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="darkModeToggle" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wider">Çalar</h3>
+                        <div class="flex justify-between items-center p-3 rounded-lg bg-gray-800/50">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-bell text-white text-sm"></i>
+                                </div>
+                                <span class="text-white text-sm">Bildirimler</span>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="notificationsToggle" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Audio Quality -->
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wider">Ses Kalitesi</h3>
+                        <div class="space-y-2">
+                            <button class="w-full p-3 rounded-lg bg-primary/20 text-white text-left hover:bg-primary/30 transition-all quality-btn" data-quality="high">
+                                <div class="flex justify-between items-center">
+                                    <span>Yüksek Kalite (320kbps)</span>
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </button>
+                            <button class="w-full p-3 rounded-lg bg-gray-800/50 text-gray-400 text-left hover:bg-gray-700/50 transition-all quality-btn" data-quality="medium">
+                                <div class="flex justify-between items-center">
+                                    <span>Orta Kalite (192kbps)</span>
+                                    <i class="fas fa-check hidden"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Push Notifications -->
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wider">Push Bildirimler</h3>
+                        <div class="space-y-2">
+                            <button id="enablePushBtn" class="w-full p-3 rounded-lg bg-green-600 text-white text-left hover:bg-green-700 transition-all">
+                                <div class="flex justify-between items-center">
+                                    <span>Push Bildirimleri Etkinleştir</span>
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                            </button>
+                            <button id="testPushBtn" class="w-full p-3 rounded-lg bg-blue-600 text-white text-left hover:bg-blue-700 transition-all">
+                                <div class="flex justify-between items-center">
+                                    <span>Test Bildirimi Gönder</span>
+                                    <i class="fas fa-paper-plane"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- App Info -->
+                <div class="mt-8 pt-6 border-t border-gray-800">
+                    <div class="text-center space-y-2">
+                        <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto">
+                            <i class="fas fa-music text-white text-lg"></i>
+                        </div>
+                        <h3 class="text-white font-semibold">Tunezz Music</h3>
+                        <p class="text-gray-400 text-sm">v1.0</p>
+                        <p class="text-gray-500 text-xs">Spotify & Deezer</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="progress-container">
-        <div class="progress-bar"></div>
-        <input type="range" class="progress" min="0" max="100" value="0">
-      </div>
-
-      <div class="time-info">
-        <span class="current-time">0:00</span>
-        <span class="duration">0:00</span>
-      </div>
-
-      <div class="player-controls">
-        <button class="control-btn dislike"><i class="fas fa-times"></i></button>
-        <button class="control-btn play-pause"><i class="fas fa-play"></i></button>
-        <button class="control-btn like"><i class="fas fa-heart"></i></button>
-      </div>
     </div>
-  </div>
 
-  <div class="favorites-sidebar">
-    <div class="sidebar-header">
-      <h3>Favorilerim</h3>
-      <button class="close-sidebar">
-        <i class="fas fa-times"></i>
-      </button>
+    <!-- Home Screen Modal -->
+    <div id="homeScreen" class="fixed inset-0 bg-black bg-opacity-90 z-50 overflow-y-auto hidden transition-all backdrop-blur-sm">
+        <div class="min-h-screen p-6">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-2xl font-bold text-white">Müzik Kütüphanesi</h1>
+                <button id="closeHomeButton" class="text-gray-400 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-800 transition-all hover:text-white">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <h2 class="text-xl font-semibold text-white">Popüler Şarkılar</h2>
+                <div id="songList" class="space-y-3 custom-scrollbar max-h-96 overflow-y-auto pr-2">
+                    <!-- Songs will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="favorites-list">
-      <p class="no-favorites">Favori şarkı bulunmamaktadır</p>
-    </div>
-  </div>
 
-  <audio id="audio-player"></audio>
+    <!-- Audio Element -->
+    <audio id="audioPlayer" preload="metadata"></audio>
 
-  <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
-    <script src="js/app.js"></script>
-     <!-- partial -->
-  <script  src="./script.js"></script>
+    <!-- Main JavaScript -->
+    <script>
+        // API Configuration
+        const API_CONFIG = {
+            spotify: {
+                enabled: true,
+                clientId: "YOUR_SPOTIFY_CLIENT_ID",
+                clientSecret: "YOUR_SPOTIFY_CLIENT_SECRET",
+                baseUrl: "https://api.spotify.com/v1"
+            },
+            deezer: {
+                enabled: true,
+                appId: "YOUR_DEEZER_APP_ID",
+                baseUrl: "https://api.deezer.com"
+            }
+        };
+
+        // Enhanced Music Data
+        const musicData = [
+        {
+                id: 1,
+                title: "Let You Down",
+                artist: "NF",
+                album: "Perception",
+                genre: "Hip-Hop/Rap",
+                duration: "3:16",
+                year: 2017,
+                image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDctLGk2uc9LcJ0eBbzolMydgfbVukyOb0YzNnTfIlsQlee-MeudbcwZp8zeLsFyZit41m0eC7izvk5B9S-JEU6eZkG2IgAgOtOQOXA2gXMRYQGNxN9mgs_tfxiQdSbFE-rP-4Qfu_AKpTtpdJVRPD8BgE2hkYSZza7YbG2-K8yrokte2AzT_i3-tVk-4iPkoeezGOZpVGPxosRRtpOKlexUQVtlhvOVdDbBzNjI6_Puo0pJA0m_W6IgSSYY3Vr5DoPnfWf7XtU2Fk",
+                source: "https://www.soundjay.com/music/sounds-2020-06-22.mp3",
+                popularity: 95,
+                bpm: 110
+            },
+            {
+                id: 2,
+                title: "Blinding Lights",
+                artist: "The Weeknd",
+                album: "After Hours",
+                genre: "Pop/R&B",
+                duration: "3:20",
+                year: 2020,
+                image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bXVzaWMlMjBhbGJ1bXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+                source: "https://www.soundjay.com/music/bubble-pop-1.mp3",
+                popularity: 98,
+                bpm: 120
+            },
+            {
+                id: 3,
+                title: "The Last Point",
+                artist: "Raspberry",
+                album: "÷ (Divide)",
+                genre: "Beat, Electronic",
+                duration: "2:05",
+                year: 2025,
+                image: "https://scontent.fkya4-1.fna.fbcdn.net/v/t39.30808-6/300058015_443744147772203_2078555085042233079_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=PgFiMWXf7VAQ7kNvwHSux_D&_nc_oc=AdnGQVL4aOi-44dIyQghThAREyUGFx66zCQTDNqK3o62e6n8Z1wi0MR7EocBNqzIyOE&_nc_zt=23&_nc_ht=scontent.fkya4-1.fna&_nc_gid=pY7LqPDkSX9AgDPcZvZ6Nw&oh=00_AfiSRxx3T02v9Q93wX8OK3eUEmKynDuvHxQUYy9D8FPH3Q&oe=69194B09",
+                source: "https://cdn.pixabay.com/download/audio/2025/08/30/audio_00ae00f400.mp3",
+                popularity: 97,
+                bpm: 96
+            },
+            {
+                id: 4,
+                title: "Groovy Vibe",
+                artist: "Bransboynd",
+                genre: "Hip-Hop",
+                duration: "3:16",
+                year: 2020,
+                image: "https://cdn.pixabay.com/audio/2025/10/28/08-36-46-53_200x200.jpg",
+                source: "https://cdn.pixabay.com/download/audio/2025/10/28/audio_4285598df8.mp3",
+                popularity: 97,
+                bpm: 96
+            },
+            {
+                id: 5,
+                title: "Cascade Breathe ",
+                artist: "Avetyan",
+                genre: "Relax",
+                duration: "2:19",
+                year: 2022,
+                image: "https://cdn.pixabay.com/audio/2025/09/30/12-38-24-999_200x200.jpg",
+                source: "https://cdn.pixabay.com/download/audio/2025/09/30/audio_a59a02b883.mp3",
+                popularity: 97,
+                bpm: 96
+            },
+            {
+                id: 6,
+                title: "Deep Abstract Ambient",
+                artist: "Ummbrella",
+                genre: "ambiance",
+                duration: "1:39",
+                year: 2018,
+                image: "https://cdn.pixabay.com/audio/2025/09/08/17-14-54-371_200x200.jpeg",
+                source: "https://cdn.pixabay.com/download/audio/2025/09/08/audio_3e2526c41c.mp3",
+                popularity: 97,
+                bpm: 96
+            },
+            {
+                id: 7,
+                title: "Blinding Lights",
+                artist: "The Weeknd",
+                album: "After Hours",
+                genre: "Pop/R&B",
+                duration: "3:20",
+                year: 2020,
+                image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bXVzaWMlMjBhbGJ1bXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+                source: "https://www.soundjay.com/music/bubble-pop-1.mp3",
+                popularity: 98,
+                bpm: 120
+            },
+            {
+                id: 8,
+                title: "Come On Push",
+                artist: "Alendra",
+                album: "After Hours",
+                genre: "Pop/R&B",
+                duration: "3:20",
+                year: 2025,
+                image: "https://devsetup2.github.io/Tunes/comeonpush.png",
+                source: "https://devsetup2.github.io/Tunes/comeonpush.mp3",
+                popularity: 98,
+                bpm: 120
+            },
+            {
+                id: 9,
+                title: "Long Ambient Journey",
+                artist: "Ambient Universe",
+                album: "Space Sounds",
+                genre: "Ambient",
+                duration: "8:45",
+                year: 2023,
+                image: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+                source: "https://cdn.pixabay.com/download/audio/2022/12/22/audio_d5aef385f3.mp3",
+                popularity: 88,
+                bpm: 60
+            },
+            {
+                id: 10,
+                title: "Epic Cinematic Experience",
+                artist: "Cinematic Sounds",
+                album: "Movie Scores",
+                genre: "Cinematic",
+                duration: "6:30",
+                year: 2024,
+                image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+                source: "https://cdn.pixabay.com/download/audio/2023/01/15/audio_0e67de0c0f.mp3",
+                popularity: 92,
+                bpm: 70
+            },
+            {
+                id: 11,
+                title: "Deep Focus Study Music",
+                artist: "Study Beats",
+                album: "Concentration",
+                genre: "Study",
+                duration: "10:15",
+                year: 2023,
+                image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+                source: "https://cdn.pixabay.com/download/audio/2023/03/10/audio_3b8f7e5c0a.mp3",
+                popularity: 85,
+                bpm: 65
+            }
+            
+        ];
+
+        // Player State
+        let currentSongIndex = 0;
+        let isPlaying = false;
+        let isShuffled = false;
+        let isRepeating = false;
+        let currentVolume = 0.7;
+        let audioQuality = 'high';
+        let notificationsEnabled = true;
+        let pushNotificationsEnabled = false;
+        let isDragging = false;
+
+        // DOM Elements
+        const elements = {
+            backButton: document.getElementById('backButton'),
+            menuButton: document.getElementById('menuButton'),
+            closeMenuButton: document.getElementById('closeMenuButton'),
+            menuModal: document.getElementById('menuModal'),
+            homeScreen: document.getElementById('homeScreen'),
+            closeHomeButton: document.getElementById('closeHomeButton'),
+            songList: document.getElementById('songList'),
+            playPauseButton: document.getElementById('playPauseButton'),
+            playPauseIcon: document.getElementById('playPauseIcon'),
+            prevButton: document.getElementById('prevButton'),
+            nextButton: document.getElementById('nextButton'),
+            shuffleButton: document.getElementById('shuffleButton'),
+            repeatButton: document.getElementById('repeatButton'),
+            albumArt: document.getElementById('albumArt'),
+            songTitle: document.getElementById('songTitle'),
+            artistName: document.getElementById('artistName'),
+            songTitle2: document.getElementById('songTitle2'),
+            artistName2: document.getElementById('artistName2'),
+            songGenre: document.getElementById('songGenre'),
+            currentTime: document.getElementById('currentTime'),
+            duration: document.getElementById('duration'),
+            progressContainer: document.getElementById('progressContainer'),
+            progressBarFill: document.getElementById('progressBarFill'),
+            progressHandle: document.getElementById('progressHandle'),
+            progressCircle: document.getElementById('progressCircle'),
+            progressDot: document.getElementById('progressDot'),
+            darkModeToggle: document.getElementById('darkModeToggle'),
+            spotifyToggle: document.getElementById('spotifyToggle'),
+            deezerToggle: document.getElementById('deezerToggle'),
+            notificationsToggle: document.getElementById('notificationsToggle'),
+            volumeSlider: document.getElementById('volumeSlider'),
+            audioPlayer: document.getElementById('audioPlayer'),
+            notificationContainer: document.getElementById('notificationContainer'),
+            enablePushBtn: document.getElementById('enablePushBtn'),
+            testPushBtn: document.getElementById('testPushBtn')
+        };
+
+        // Initialize the player
+        function initPlayer() {
+            loadSong(currentSongIndex);
+            populateSongList();
+            loadSettings();
+            setupEventListeners();
+            setupAudioPlayer();
+            setupProgressBar();
+            applyDarkMode(true);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            elements.backButton.addEventListener('click', showHomeScreen);
+            elements.menuButton.addEventListener('click', () => elements.menuModal.classList.remove('hidden'));
+            elements.closeMenuButton.addEventListener('click', () => elements.menuModal.classList.add('hidden'));
+            elements.closeHomeButton.addEventListener('click', () => elements.homeScreen.classList.add('hidden'));
+            elements.playPauseButton.addEventListener('click', togglePlayPause);
+            elements.prevButton.addEventListener('click', playPrevious);
+            elements.nextButton.addEventListener('click', playNext);
+            elements.shuffleButton.addEventListener('click', toggleShuffle);
+            elements.repeatButton.addEventListener('click', toggleRepeat);
+            
+            // Settings event listeners
+            elements.darkModeToggle.addEventListener('change', toggleDarkMode);
+            elements.spotifyToggle.addEventListener('change', toggleSpotify);
+            elements.deezerToggle.addEventListener('change', toggleDeezer);
+            elements.notificationsToggle.addEventListener('change', toggleNotifications);
+            elements.volumeSlider.addEventListener('input', updateVolume);
+            elements.enablePushBtn.addEventListener('click', enablePushNotifications);
+            elements.testPushBtn.addEventListener('click', testPushNotification);
+            
+            // Audio quality buttons
+            document.querySelectorAll('.quality-btn').forEach(btn => {
+                btn.addEventListener('click', () => setAudioQuality(btn.dataset.quality));
+            });
+        }
+
+        // Setup progress bar events
+        function setupProgressBar() {
+            // Click to seek
+            elements.progressContainer.addEventListener('click', (e) => {
+                if (!isDragging) {
+                    seekToPosition(e);
+                }
+            });
+
+            // Drag to seek
+            elements.progressHandle.addEventListener('mousedown', startDragging);
+            elements.progressHandle.addEventListener('touchstart', startDragging);
+
+            // Mouse events for dragging
+            document.addEventListener('mousemove', handleDrag);
+            document.addEventListener('mouseup', stopDragging);
+
+            // Touch events for dragging
+            document.addEventListener('touchmove', handleDrag);
+            document.addEventListener('touchend', stopDragging);
+        }
+
+        function startDragging(e) {
+            e.preventDefault();
+            isDragging = true;
+            elements.progressHandle.style.cursor = 'grabbing';
+        }
+
+        function handleDrag(e) {
+            if (!isDragging) return;
+            
+            e.preventDefault();
+            const rect = elements.progressContainer.getBoundingClientRect();
+            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+            
+            if (clientX) {
+                const x = clientX - rect.left;
+                const percentage = Math.max(0, Math.min(1, x / rect.width));
+                updateProgressPosition(percentage);
+                
+                // Preview the time while dragging
+                if (elements.audioPlayer.duration) {
+                    const previewTime = percentage * elements.audioPlayer.duration;
+                    elements.currentTime.textContent = formatTime(previewTime);
+                }
+            }
+        }
+
+        function stopDragging() {
+            if (isDragging) {
+                isDragging = false;
+                elements.progressHandle.style.cursor = 'grab';
+                
+                // Final seek when dragging stops
+                if (elements.audioPlayer.duration) {
+                    const rect = elements.progressContainer.getBoundingClientRect();
+                    const percentage = parseFloat(elements.progressBarFill.style.width) / 100;
+                    elements.audioPlayer.currentTime = percentage * elements.audioPlayer.duration;
+                }
+            }
+        }
+
+        function seekToPosition(e) {
+            const rect = elements.progressContainer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const percentage = Math.max(0, Math.min(1, x / rect.width));
+            
+            if (elements.audioPlayer.duration) {
+                elements.audioPlayer.currentTime = percentage * elements.audioPlayer.duration;
+                updateProgressPosition(percentage);
+            }
+        }
+
+        function updateProgressPosition(percentage) {
+            const percentageWidth = percentage * 100;
+            elements.progressBarFill.style.width = `${percentageWidth}%`;
+            elements.progressHandle.style.left = `${percentageWidth}%`;
+            
+            // Update circular progress
+            const circumference = 2 * Math.PI * 45;
+            const offset = circumference - (percentageWidth / 100) * circumference;
+            elements.progressCircle.style.strokeDashoffset = offset;
+            
+            // Update progress dot position
+            const angle = (percentageWidth / 100) * 360 - 90;
+            const radius = 45;
+            const dotX = 50 + radius * Math.cos(angle * Math.PI / 180);
+            const dotY = 50 + radius * Math.sin(angle * Math.PI / 180);
+            elements.progressDot.style.transform = `translate(${dotX - 1.5}px, ${dotY - 1.5}px)`;
+        }
+
+        // Setup audio player
+        function setupAudioPlayer() {
+            elements.audioPlayer.volume = currentVolume;
+            
+            elements.audioPlayer.addEventListener('loadedmetadata', () => {
+                elements.duration.textContent = formatTime(elements.audioPlayer.duration);
+                updateProgress();
+            });
+            
+            elements.audioPlayer.addEventListener('timeupdate', updateProgress);
+            
+            elements.audioPlayer.addEventListener('ended', () => {
+                if (isRepeating) {
+                    playCurrentSong();
+                } else {
+                    playNext();
+                }
+            });
+            
+            elements.audioPlayer.addEventListener('play', () => {
+                if (notificationsEnabled) {
+                    showNotification(
+                        'Şu Anda Çalıyor',
+                        `${musicData[currentSongIndex].title} - ${musicData[currentSongIndex].artist}`,
+                        'fas fa-play',
+                        '#'
+                    );
+                }
+            });
+        }
+
+        // Apply dark/light mode
+        function applyDarkMode(isDark) {
+            if (isDark) {
+                document.body.classList.remove('light-mode');
+                document.body.classList.add('gradient-bg');
+            } else {
+                document.body.classList.remove('gradient-bg');
+                document.body.classList.add('light-mode');
+            }
+        }
+
+        // Load song data
+        function loadSong(index) {
+            const song = musicData[index];
+            elements.albumArt.src = song.image;
+            elements.songTitle.textContent = song.title;
+            elements.artistName.textContent = song.artist;
+            elements.songTitle2.textContent = song.title;
+            elements.artistName2.textContent = song.artist;
+            elements.songGenre.textContent = `${song.genre} • ${song.year}`;
+            
+            elements.audioPlayer.src = song.source;
+            elements.audioPlayer.load();
+            updateProgress();
+        }
+
+        // Populate song list
+        function populateSongList() {
+            elements.songList.innerHTML = '';
+            musicData.forEach((song, index) => {
+                const songElement = document.createElement('div');
+                songElement.className = 'song-card flex items-center p-4 rounded-xl cursor-pointer';
+                songElement.innerHTML = `
+                    <img src="${song.image}" alt="${song.title}" class="w-14 h-14 rounded-lg object-cover shadow-lg">
+                    <div class="ml-4 flex-1 min-w-0">
+                        <h3 class="font-semibold text-white truncate">${song.title}</h3>
+                        <p class="text-sm text-gray-400 truncate">${song.artist} • ${song.album}</p>
+                    </div>
+                    <span class="text-sm text-gray-400 ml-2">${song.duration}</span>
+                `;
+                songElement.addEventListener('click', () => {
+                    currentSongIndex = index;
+                    loadSong(currentSongIndex);
+                    playCurrentSong();
+                    elements.homeScreen.classList.add('hidden');
+                });
+                elements.songList.appendChild(songElement);
+            });
+        }
+
+        // Player control functions
+        function togglePlayPause() {
+            if (isPlaying) {
+                pauseSong();
+            } else {
+                playCurrentSong();
+            }
+        }
+
+        function playCurrentSong() {
+            elements.audioPlayer.play().then(() => {
+                isPlaying = true;
+                elements.playPauseIcon.className = 'fas fa-pause text-2xl';
+            }).catch(error => {
+                console.error('Play failed:', error);
+            });
+        }
+
+        function pauseSong() {
+            elements.audioPlayer.pause();
+            isPlaying = false;
+            elements.playPauseIcon.className = 'fas fa-play text-2xl pl-1';
+        }
+
+        function playPrevious() {
+            currentSongIndex = (currentSongIndex - 1 + musicData.length) % musicData.length;
+            loadSong(currentSongIndex);
+            if (isPlaying) playCurrentSong();
+        }
+
+        function playNext() {
+            currentSongIndex = isShuffled ? 
+                Math.floor(Math.random() * musicData.length) : 
+                (currentSongIndex + 1) % musicData.length;
+            loadSong(currentSongIndex);
+            if (isPlaying) playCurrentSong();
+        }
+
+        function toggleShuffle() {
+            isShuffled = !isShuffled;
+            elements.shuffleButton.classList.toggle('text-gray-400', !isShuffled);
+            elements.shuffleButton.classList.toggle('text-primary', isShuffled);
+        }
+
+        function toggleRepeat() {
+            isRepeating = !isRepeating;
+            elements.repeatButton.classList.toggle('text-gray-400', !isRepeating);
+            elements.repeatButton.classList.toggle('text-primary', isRepeating);
+        }
+
+        function updateProgress() {
+            if (isDragging) return;
+            
+            const currentTime = elements.audioPlayer.currentTime || 0;
+            const duration = elements.audioPlayer.duration || 1;
+            const progressPercent = (currentTime / duration) * 100;
+            
+            updateProgressPosition(progressPercent / 100);
+            
+            elements.currentTime.textContent = formatTime(currentTime);
+            if (duration && !isNaN(duration)) {
+                elements.duration.textContent = formatTime(duration);
+            }
+        }
+
+        function updateVolume() {
+            currentVolume = elements.volumeSlider.value;
+            elements.audioPlayer.volume = currentVolume;
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Settings functions
+        function toggleDarkMode() {
+            const isDark = elements.darkModeToggle.checked;
+            applyDarkMode(isDark);
+            showNotification(
+                isDark ? 'Koyu Mod' : 'Açık Mod', 
+                isDark ? 'Koyu mod etkinleştirildi' : 'Açık mod etkinleştirildi', 
+                isDark ? 'fas fa-moon' : 'fas fa-sun', 
+                '#'
+            );
+            saveSettings();
+        }
+
+        function toggleSpotify() {
+            const enabled = elements.spotifyToggle.checked;
+            showNotification(
+                'Spotify', 
+                enabled ? 'Spotify entegrasyonu etkinleştirildi' : 'Spotify entegrasyonu devre dışı',
+                'fab fa-spotify',
+                '#'
+            );
+            saveSettings();
+        }
+
+        function toggleDeezer() {
+            const enabled = elements.deezerToggle.checked;
+            showNotification(
+                'Deezer', 
+                enabled ? 'Deezer entegrasyonu etkinleştirildi' : 'Deezer entegrasyonu devre dışı',
+                'fab fa-deezer',
+                '#'
+            );
+            saveSettings();
+        }
+
+        function toggleNotifications() {
+            notificationsEnabled = elements.notificationsToggle.checked;
+            showNotification(
+                'Bildirimler', 
+                notificationsEnabled ? 'Bildirimler etkinleştirildi' : 'Bildirimler devre dışı',
+                'fas fa-bell',
+                '#'
+            );
+            saveSettings();
+        }
+
+        function setAudioQuality(quality) {
+            audioQuality = quality;
+            
+            document.querySelectorAll('.quality-btn').forEach(btn => {
+                const icon = btn.querySelector('.fas.fa-check');
+                if (btn.dataset.quality === quality) {
+                    btn.classList.add('bg-primary/20', 'text-white');
+                    btn.classList.remove('bg-gray-800/50', 'text-gray-400');
+                    icon.classList.remove('hidden');
+                } else {
+                    btn.classList.remove('bg-primary/20', 'text-white');
+                    btn.classList.add('bg-gray-800/50', 'text-gray-400');
+                    icon.classList.add('hidden');
+                }
+            });
+            
+            showNotification(
+                'Ses Kalitesi',
+                `${quality === 'high' ? 'Yüksek' : 'Orta'} kalite seçildi (${quality === 'high' ? '320kbps' : '192kbps'})`,
+                'fas fa-volume-up',
+                '#'
+            );
+            saveSettings();
+        }
+
+        // Push Notification functions
+        function enablePushNotifications() {
+            if (!('Notification' in window)) {
+                showNotification('Hata', 'Tarayıcınız bildirimleri desteklemiyor', 'fas fa-exclamation-triangle', '#');
+                return;
+            }
+
+            if (Notification.permission === 'granted') {
+                pushNotificationsEnabled = true;
+                showNotification('Başarılı', 'Push bildirimleri zaten etkin', 'fas fa-bell', '#');
+            } else if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        pushNotificationsEnabled = true;
+                        showNotification('Başarılı', 'Push bildirimleri etkinleştirildi', 'fas fa-bell', '#');
+                        schedulePushNotifications();
+                    }
+                });
+            }
+        }
+
+        function testPushNotification() {
+            if (!pushNotificationsEnabled) {
+                showNotification('Hata', 'Önce push bildirimleri etkinleştirin', 'fas fa-exclamation-triangle', '#');
+                return;
+            }
+
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.ready.then(registration => {
+                    registration.showNotification('Tunezz Yeni Şarkı Eklendi', {
+                        body: 'Random Müzik Keyfi Keşfedin Müzikleri',
+                        icon: 'https://via.placeholder.com/192x192/1DB954/ffffff?text=MC',
+                        badge: 'https://via.placeholder.com/72x72/1DB954/ffffff?text=MC',
+                        tag: 'test-notification',
+                        requireInteraction: true,
+                        actions: [
+                            {
+                                action: 'play',
+                                title: 'Çalmaya Devam Et'
+                            },
+                            {
+                                action: 'close',
+                                title: 'Kapat'
+                            }
+                        ]
+                    });
+                });
+            }
+        }
+
+        function schedulePushNotifications() {
+            setTimeout(() => {
+                if (pushNotificationsEnabled) {
+                    testPushNotification();
+                }
+            }, 5000);
+        }
+
+        // Notification system
+        function showNotification(title, message, icon, link) {
+            if (!notificationsEnabled) return;
+            
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <div class="flex items-start">
+                    <i class="${icon} notification-icon"></i>
+                    <div class="notification-content">
+                        <div class="notification-title">${title}</div>
+                        <div class="notification-message">${message}</div>
+                        ${link ? `<a href="${link}" class="notification-link">Detayları Gör</a>` : ''}
+                    </div>
+                    <button class="text-gray-400 hover:text-white ml-2" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            elements.notificationContainer.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                notification.classList.add('hide');
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, 5000);
+        }
+
+        function showHomeScreen() {
+            elements.homeScreen.classList.remove('hidden');
+        }
+
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('musicPlayerSettings')) || {};
+            
+            if (settings.darkMode !== undefined) {
+                elements.darkModeToggle.checked = settings.darkMode;
+                applyDarkMode(settings.darkMode);
+            }
+            
+            if (settings.spotifyEnabled !== undefined) {
+                elements.spotifyToggle.checked = settings.spotifyEnabled;
+            }
+            
+            if (settings.deezerEnabled !== undefined) {
+                elements.deezerToggle.checked = settings.deezerEnabled;
+            }
+            
+            if (settings.notificationsEnabled !== undefined) {
+                elements.notificationsToggle.checked = settings.notificationsEnabled;
+                notificationsEnabled = settings.notificationsEnabled;
+            }
+            
+            if (settings.audioQuality) {
+                setAudioQuality(settings.audioQuality);
+            }
+        }
+
+        function saveSettings() {
+            const settings = {
+                darkMode: elements.darkModeToggle.checked,
+                spotifyEnabled: elements.spotifyToggle.checked,
+                deezerEnabled: elements.deezerToggle.checked,
+                notificationsEnabled: elements.notificationsToggle.checked,
+                audioQuality: audioQuality
+            };
+            localStorage.setItem('musicPlayerSettings', JSON.stringify(settings));
+        }
+
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', initPlayer);
+
+        // Global function for testing notifications
+        window.showNotification = showNotification;
+        window.testPushNotification = testPushNotification;
+    </script>
 </body>
 </html>
-
-
