@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-   <link rel="icon" type="image/x-icon" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.svg">
     <title>Tunezz</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
@@ -292,8 +291,8 @@
             text-decoration: underline;
         }
     </style>
+        <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="setupdev" data-description="Support me on Buy me a coffee!" data-message="Thank you for your support. " data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 
-    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="setupdev" data-description="Support me on Buy me a coffee!" data-message="Thank you for your support. " data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 </head>
 <body class="gradient-bg min-h-screen flex items-center justify-center p-4">
     <!-- Notification Container -->
@@ -517,7 +516,7 @@
 
     <!-- Home Screen Modal -->
     <div id="homeScreen" class="fixed inset-0 bg-black bg-opacity-90 z-50 overflow-y-auto hidden transition-all backdrop-blur-sm">
-        <div class="min-h-screen p-6">
+        <div class="min-h-screen h-full p-6 flex flex-col">
             <div class="flex justify-between items-center mb-8">
                 <h1 class="text-2xl font-bold text-white">Müzik Kütüphanesi</h1>
                 <button id="closeHomeButton" class="text-gray-400 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-800 transition-all hover:text-white">
@@ -527,7 +526,7 @@
             
             <div class="space-y-6">
                 <h2 class="text-xl font-semibold text-white">Popüler Şarkılar</h2>
-                <div id="songList" class="space-y-3 custom-scrollbar max-h-96 overflow-y-auto pr-2">
+                <div id="songList" class="space-y-3 custom-scrollbar h-full overflow-y-auto pr-2">
                     <!-- Songs will be populated by JavaScript -->
                 </div>
             </div>
@@ -557,159 +556,159 @@
         // Enhanced Music Data
         const musicData = [
         {
-                id: 1,
-                title: "Let You Down",
-                artist: "NF",
-                album: "Perception",
-                genre: "Hip-Hop/Rap",
-                duration: "3:16",
-                year: 2017,
-                image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDctLGk2uc9LcJ0eBbzolMydgfbVukyOb0YzNnTfIlsQlee-MeudbcwZp8zeLsFyZit41m0eC7izvk5B9S-JEU6eZkG2IgAgOtOQOXA2gXMRYQGNxN9mgs_tfxiQdSbFE-rP-4Qfu_AKpTtpdJVRPD8BgE2hkYSZza7YbG2-K8yrokte2AzT_i3-tVk-4iPkoeezGOZpVGPxosRRtpOKlexUQVtlhvOVdDbBzNjI6_Puo0pJA0m_W6IgSSYY3Vr5DoPnfWf7XtU2Fk",
-                source: "https://www.soundjay.com/music/sounds-2020-06-22.mp3",
-                popularity: 95,
-                bpm: 110
-            },
-            {
-                id: 2,
-                title: "Blinding Lights",
-                artist: "The Weeknd",
-                album: "After Hours",
-                genre: "Pop/R&B",
-                duration: "3:20",
-                year: 2020,
-                image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bXVzaWMlMjBhbGJ1bXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
-                source: "https://www.soundjay.com/music/bubble-pop-1.mp3",
-                popularity: 98,
-                bpm: 120
-            },
-            {
-                id: 3,
-                title: "The Last Point",
-                artist: "Raspberry",
-                album: "÷ (Divide)",
-                genre: "Beat, Electronic",
-                duration: "2:05",
-                year: 2025,
-                image: "https://scontent.fkya4-1.fna.fbcdn.net/v/t39.30808-6/300058015_443744147772203_2078555085042233079_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=PgFiMWXf7VAQ7kNvwHSux_D&_nc_oc=AdnGQVL4aOi-44dIyQghThAREyUGFx66zCQTDNqK3o62e6n8Z1wi0MR7EocBNqzIyOE&_nc_zt=23&_nc_ht=scontent.fkya4-1.fna&_nc_gid=pY7LqPDkSX9AgDPcZvZ6Nw&oh=00_AfiSRxx3T02v9Q93wX8OK3eUEmKynDuvHxQUYy9D8FPH3Q&oe=69194B09",
-                source: "https://cdn.pixabay.com/download/audio/2025/08/30/audio_00ae00f400.mp3",
-                popularity: 97,
-                bpm: 96
-            },
-            {
-                id: 4,
-                title: "Groovy Vibe",
-                artist: "Bransboynd",
-                genre: "Hip-Hop",
-                duration: "3:16",
-                year: 2020,
-                image: "https://cdn.pixabay.com/audio/2025/10/28/08-36-46-53_200x200.jpg",
-                source: "https://cdn.pixabay.com/download/audio/2025/10/28/audio_4285598df8.mp3",
-                popularity: 97,
-                bpm: 96
-            },
-            {
-                id: 5,
-                title: "Cascade Breathe ",
-                artist: "Avetyan",
-                genre: "Relax",
-                duration: "2:19",
-                year: 2022,
-                image: "https://cdn.pixabay.com/audio/2025/09/30/12-38-24-999_200x200.jpg",
-                source: "https://cdn.pixabay.com/download/audio/2025/09/30/audio_a59a02b883.mp3",
-                popularity: 97,
-                bpm: 96
-            },
-            {
-                id: 6,
-                title: "Deep Abstract Ambient",
-                artist: "Ummbrella",
-                genre: "ambiance",
-                duration: "1:39",
-                year: 2018,
-                image: "https://cdn.pixabay.com/audio/2025/09/08/17-14-54-371_200x200.jpeg",
-                source: "https://cdn.pixabay.com/download/audio/2025/09/08/audio_3e2526c41c.mp3",
-                popularity: 97,
-                bpm: 96
-            },
-            {
-                id: 7,
-                title: "Blinding Lights",
-                artist: "The Weeknd",
-                album: "After Hours",
-                genre: "Pop/R&B",
-                duration: "3:20",
-                year: 2020,
-                image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bXVzaWMlMjBhbGJ1bXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
-                source: "https://www.soundjay.com/music/bubble-pop-1.mp3",
-                popularity: 98,
-                bpm: 120
-            },
-            {
-                id: 8,
-                title: "Come On Push",
-                artist: "Alendra",
-                album: "After Hours",
-                genre: "Pop/R&B",
-                duration: "3:20",
-                year: 2025,
-                image: "https://devsetup2.github.io/Tunes/comeonpush.png",
-                source: "https://devsetup2.github.io/Tunes/comeonpush.mp3",
-                popularity: 98,
-                bpm: 120
-            },
-            {
-                id: 9,
-                title: "Long Ambient Journey",
-                artist: "Ambient Universe",
-                album: "Space Sounds",
-                genre: "Ambient",
-                duration: "8:45",
-                year: 2023,
-                image: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-                source: "https://cdn.pixabay.com/download/audio/2022/12/22/audio_d5aef385f3.mp3",
-                popularity: 88,
-                bpm: 60
-            },
-            {
-                id: 10,
-                title: "Epic Cinematic Experience",
-                artist: "Cinematic Sounds",
-                album: "Movie Scores",
-                genre: "Cinematic",
-                duration: "6:30",
-                year: 2024,
-                image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-                source: "https://cdn.pixabay.com/download/audio/2023/01/15/audio_0e67de0c0f.mp3",
-                popularity: 92,
-                bpm: 70
-            },
-            {
-                id: 11,
-                title: "Deep Focus Study Music",
-                artist: "Study Beats",
-                album: "Concentration",
-                genre: "Study",
-                duration: "10:15",
-                year: 2023,
-                image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-                source: "https://cdn.pixabay.com/download/audio/2023/03/10/audio_3b8f7e5c0a.mp3",
-                popularity: 85,
-                bpm: 65
-            },
-             {
-                id: 12,
-                title: "Stay",
-                artist: "The Kid LAROI, Justin Bieber",
-                album: "Stay",
-                genre: "Remix, Dj",
-                duration: "5:44",
-                year: 2021,
-                image: "https://i.scdn.co/image/ab67616d0000b273c5653f9038e42efad2f8a266",
-                source: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-                popularity: 80,
-                bpm: 65
-            },
-    {
+  id: 1,
+  title: "Let You Down",
+  artist: "NF",
+  album: "Perception",
+  genre: "Hip-Hop/Rap",
+  duration: "3:16",
+  year: 2017,
+  image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDctLGk2uc9LcJ0eBbzolMydgfbVukyOb0YzNnTfIlsQlee-MeudbcwZp8zeLsFyZit41m0eC7izvk5B9S-JEU6eZkG2IgAgOtOQOXA2gXMRYQGNxN9mgs_tfxiQdSbFE-rP-4Qfu_AKpTtpdJVRPD8BgE2hkYSZza7YbG2-K8yrokte2AzT_i3-tVk-4iPkoeezGOZpVGPxosRRtpOKlexUQVtlhvOVdDbBzNjI6_Puo0pJA0m_W6IgSSYY3Vr5DoPnfWf7XtU2Fk",
+  source: "https://www.soundjay.com/music/sounds-2020-06-22.mp3",
+  popularity: 95,
+  bpm: 110
+},
+{
+  id: 2,
+  title: "Blinding Lights",
+  artist: "The Weeknd",
+  album: "After Hours",
+  genre: "Pop/R&B",
+  duration: "3:20",
+  year: 2020,
+  image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bXVzaWMlMjBhbGJ1bXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+  source: "https://www.soundjay.com/music/bubble-pop-1.mp3",
+  popularity: 98,
+  bpm: 171  // Blinding Lights gerçek BPM ~171 :contentReference[oaicite:0]{index=0}
+},
+{
+  id: 3,
+  title: "The Last Point",
+  artist: "Raspberry",
+  album: "÷ (Divide)",
+  genre: "Beat, Electronic",
+  duration: "2:05",
+  year: 2025,
+  image: "https://scontent.fkya4-1.fna.fbcdn.net/v/t39.30808-6/300058015_443744147772203_2078555085042233079_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=PgFiMWXf7VAQ7kNvwHSux_D&_nc_oc=AdnGQVL4aOi-44dIyQghThAREyUGFx66zCQTDNqK3o62e6n8Z1wi0MR7EocBNqzIyOE&_nc_zt=23&_nc_ht=scontent.fkya4-1.fna&_nc_gid=pY7LqPDkSX9AgDPcZvZ6Nw&oh=00_AfiSRxx3T02v9Q93wX8OK3eUEmKynDuvHxQUYy9D8FPH3Q&oe=69194B09",
+  source: "https://cdn.pixabay.com/download/audio/2025/08/30/audio_00ae00f400.mp3",
+  popularity: 97,
+  bpm: 96
+},
+{
+  id: 4,
+  title: "Groovy Vibe",
+  artist: "Bransboynd",
+  genre: "Hip-Hop",
+  duration: "3:16",
+  year: 2020,
+  image: "https://cdn.pixabay.com/audio/2025/10/28/08-36-46-53_200x200.jpg",
+  source: "https://cdn.pixabay.com/download/audio/2025/10/28/audio_4285598df8.mp3",
+  popularity: 97,
+  bpm: 96
+},
+{
+  id: 5,
+  title: "Cascade Breathe",
+  artist: "Avetyan",
+  genre: "Relax",
+  duration: "2:19",
+  year: 2022,
+  image: "https://cdn.pixabay.com/audio/2025/09/30/12-38-24-999_200x200.jpg",
+  source: "https://cdn.pixabay.com/download/audio/2025/09/30/audio_a59a02b883.mp3",
+  popularity: 97,
+  bpm: 80
+},
+{
+  id: 6,
+  title: "Deep Abstract Ambient",
+  artist: "Ummbrella",
+  genre: "Ambiance",
+  duration: "1:39",
+  year: 2018,
+  image: "https://cdn.pixabay.com/audio/2025/09/08/17-14-54-371_200x200.jpeg",
+  source: "https://cdn.pixabay.com/download/audio/2025/09/08/audio_3e2526c41c.mp3",
+  popularity: 97,
+  bpm: 72
+},
+{
+  id: 7,
+  title: "Blinding Lights",
+  artist: "The Weeknd",
+  album: "After Hours",
+  genre: "Pop/R&B",
+  duration: "3:20",
+  year: 2020,
+  image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bXVzaWMlMjBhbGJ1bXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+  source: "https://www.soundjay.com/music/bubble-pop-1.mp3",
+  popularity: 98,
+  bpm: 171
+},
+{
+  id: 8,
+  title: "Come On Push",
+  artist: "Alendra",
+  album: "After Hours",
+  genre: "Pop/R&B",
+  duration: "3:20",
+  year: 2025,
+  image: "https://devsetup2.github.io/Tunes/comeonpush.png",
+  source: "https://devsetup2.github.io/Tunes/comeonpush.mp3",
+  popularity: 98,
+  bpm: 118
+},
+{
+  id: 9,
+  title: "Long Ambient Journey",
+  artist: "Ambient Universe",
+  album: "Space Sounds",
+  genre: "Ambient",
+  duration: "8:45",
+  year: 2023,
+  image: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+  source: "https://cdn.pixabay.com/download/audio/2022/12/22/audio_d5aef385f3.mp3",
+  popularity: 88,
+  bpm: 60
+},
+{
+  id: 10,
+  title: "Epic Cinematic Experience",
+  artist: "Cinematic Sounds",
+  album: "Movie Scores",
+  genre: "Cinematic",
+  duration: "6:30",
+  year: 2024,
+  image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+  source: "https://cdn.pixabay.com/download/audio/2023/01/15/audio_0e67de0c0f.mp3",
+  popularity: 92,
+  bpm: 70
+},
+{
+  id: 11,
+  title: "Deep Focus Study Music",
+  artist: "Study Beats",
+  album: "Concentration",
+  genre: "Study",
+  duration: "10:15",
+  year: 2023,
+  image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+  source: "https://cdn.pixabay.com/download/audio/2023/03/10/audio_3b8f7e5c0a.mp3",
+  popularity: 85,
+  bpm: 65
+},
+{
+  id: 12,
+  title: "Stay",
+  artist: "The Kid LAROI, Justin Bieber",
+  album: "Stay",
+  genre: "Remix, Dj",
+  duration: "5:44",
+  year: 2021,
+  image: "https://i.scdn.co/image/ab67616d0000b273c5653f9038e42efad2f8a266",
+  source: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+  popularity: 80,
+  bpm: 170  // STAY BPM ~170 :contentReference[oaicite:1]{index=1}
+},
+{
   id: 13,
   title: "Fire",
   artist: "Muammer & Suno",
@@ -720,7 +719,7 @@
   image: "https://devsetup2.github.io/Tunes/fire.png",
   source: "https://devsetup2.github.io/Tunes/fire.mp3",
   popularity: 90,
-  bpm: 70
+  bpm: 100
 },
 {
   id: 14,
@@ -733,7 +732,7 @@
   image: "https://i.scdn.co/image/ab67616d0000b2734718e2b124f79258be7bc452",
   source: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
   popularity: 98,
-  bpm: 100
+  bpm: 171
 },
 {
   id: 15,
@@ -761,7 +760,6 @@
   popularity: 85,
   bpm: 80
 },
-
 {
   id: 17,
   title: "good 4 u",
@@ -773,7 +771,7 @@
   image: "https://i.scdn.co/image/ab67616d0000b2731d7e26119d1a6648e34dc51c",
   source: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
   popularity: 95,
-  bpm: 110
+  bpm: 167  // good 4 u BPM ~167 :contentReference[oaicite:2]{index=2}
 },
 {
   id: 18,
@@ -786,7 +784,7 @@
   image: "https://t2.genius.com/unsafe/258x258/https%3A%2F%2Fimages.genius.com%2F396ec949e9108207f0fc1ee7595b7da6.1000x1000x1.png",
   source: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
   popularity: 94,
-  bpm: 88
+  bpm: 103  // Levitating BPM ~103 :contentReference[oaicite:3]{index=3}
 },
 {
   id: 19,
@@ -809,7 +807,7 @@
   genre: "Electronic",
   duration: "3:05",
   year: 2024,
-  image: "https://devsetup2.github.io/Tunezz/myyears.png",
+  image: "https://devsetup2.github.io/Tunezz/myyearswithoutyou.png",
   source: "https://devsetup2.github.io/Tunezz/myyearswithoutyou.mp3",
   popularity: 87,
   bpm: 79
@@ -825,7 +823,7 @@
   image: "https://devsetup2.github.io/Tunezz/summertime.png",
   source: "https://devsetup2.github.io/Tunezz/summertime.mp3",
   popularity: 89,
-  bpm: 98
+  bpm: 120
 },
 {
   id: 22,
@@ -835,7 +833,7 @@
   genre: "Ambient",
   duration: "3:40",
   year: 2024,
-  image: "https://devsetup2.github.io/Tunezz/whispers.png",
+  image: "https://devsetup2.github.io/Tunezz/whispersofautumn.png",
   source: "https://devsetup2.github.io/Tunezz/whispersofautumn.mp3",
   popularity: 85,
   bpm: 75
@@ -851,7 +849,7 @@
   image: "https://devsetup2.github.io/Tunezz/Lazy%20Tired.webp",
   source: "https://devsetup2.github.io/Tunezz/lazytired.mp3",
   popularity: 82,
-  bpm: 70
+  bpm: 95
 },
 {
   id: 24,
@@ -877,7 +875,7 @@
   image: "https://devsetup2.github.io/Tunezz/dancealone.png",
   source: "https://devsetup2.github.io/Tunezz/dancealone.mp3",
   popularity: 83,
-  bpm: 68
+  bpm: 115
 },
 {
   id: 26,
@@ -890,7 +888,7 @@
   image: "https://devsetup2.github.io/Tunezz/havana.png",
   source: "https://devsetup2.github.io/Tunezz/asparkinhavana.mp3",
   popularity: 92,
-  bpm: 120
+  bpm: 105
 },
 {
   id: 27,
@@ -903,7 +901,7 @@
   image: "https://raw.githubusercontent.com/AAdewunmi/Music-Player-App/refs/heads/master/images/music-1.jpg",
   source: "https://devsetup2.github.io/Tunezz/harleybird.mp3",
   popularity: 80,
-  bpm: 100
+  bpm: 105
 },
 {
   id: 28,
@@ -932,6 +930,7 @@
   bpm: 100
 }
 
+            
             
         ];
 
